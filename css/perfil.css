@@ -1,0 +1,240 @@
+/* ========================================
+   MOVEFY - Profile Selection Page Styles
+   ======================================== */
+
+.perfil-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFB 40%, #EEF6FB 100%);
+  padding-top: var(--navbar-height);
+}
+
+/* Decorative gradient blob */
+.perfil-page::before {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 212, 170, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.perfil-page::after {
+  content: '';
+  position: fixed;
+  bottom: -100px;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* --- Navbar (light variant) --- */
+.perfil-page .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.perfil-page .navbar .logo-text {
+  color: var(--text-dark);
+}
+
+.perfil-page .navbar .logo-subtitle {
+  color: var(--text-light);
+}
+
+.perfil-page .navbar .icon-btn {
+  color: var(--text-gray);
+}
+
+.perfil-page .navbar .icon-btn:hover {
+  color: var(--text-dark);
+  background: var(--bg-light);
+}
+
+/* --- Content --- */
+.perfil-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--navbar-height));
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.perfil-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  animation: fadeInDown 0.6s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.perfil-header h1 {
+  font-size: var(--font-size-4xl);
+  color: var(--primary-dark);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 800;
+}
+
+.perfil-header p {
+  font-size: var(--font-size-base);
+  color: var(--text-gray);
+}
+
+/* --- Profile Cards --- */
+.perfil-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-xl);
+  max-width: 700px;
+  width: 100%;
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.perfil-card {
+  background: var(--bg-white);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.perfil-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: var(--primary-cyan);
+  border-radius: 2px;
+  transition: width var(--transition-base);
+}
+
+.perfil-card:hover {
+  border-color: var(--primary-cyan);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-6px);
+}
+
+.perfil-card:hover::after {
+  width: 80px;
+}
+
+.perfil-card.selected {
+  border-color: var(--primary-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.15), var(--shadow-card-hover);
+}
+
+.perfil-card-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-lg);
+  font-size: 36px;
+}
+
+.perfil-card-icon.pasajero {
+  background: var(--primary-cyan-bg);
+  color: var(--primary-cyan);
+}
+
+.perfil-card-icon.conductor {
+  background: var(--primary-dark);
+  color: var(--primary-cyan);
+}
+
+.perfil-card h3 {
+  font-size: var(--font-size-xl);
+  color: var(--primary-dark);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+}
+
+.perfil-card p {
+  font-size: var(--font-size-sm);
+  color: var(--text-gray);
+  line-height: 1.6;
+}
+
+/* --- Safety Badge --- */
+.perfil-safety {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-2xl);
+  color: var(--primary-cyan);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  animation: fadeInUp 0.6s ease 0.4s both;
+}
+
+.perfil-safety svg {
+  flex-shrink: 0;
+}
+
+/* --- SafeRoute Logo --- */
+.perfil-saferoute {
+  margin-top: var(--spacing-2xl);
+  padding: var(--spacing-xl) var(--spacing-2xl);
+  background: var(--primary-cyan-bg);
+  border-radius: var(--radius-lg);
+  animation: fadeInUp 0.6s ease 0.6s both;
+}
+
+.perfil-saferoute span {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0, 212, 170, 0.4);
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .perfil-cards {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+  }
+
+  .perfil-header h1 {
+    font-size: var(--font-size-3xl);
+  }
+}

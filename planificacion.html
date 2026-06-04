@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movefy - Planificación de Viaje</title>
+  <meta name="description" content="Planifica tu viaje con Movefy. Define tu camino con datos de seguridad en tiempo real.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/planificacion.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231B2838'/%3E%3Cpath d='M16 6l8 5v10l-8 5-8-5V11l8-5z' fill='%2300D4AA'/%3E%3C/svg%3E">
+</head>
+<body class="planificacion-page">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="navbar-logo">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <circle cx="18" cy="18" r="16" stroke="#00D4AA" stroke-width="2" fill="none"/>
+        <path d="M12 18C12 14.7 14.7 12 18 12C21.3 12 24 14.7 24 18" stroke="#00D4AA" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 22L18 14L22 22" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="18" cy="18" r="2" fill="#00D4AA"/>
+      </svg>
+      <div>
+        <span class="logo-text">movefy</span>
+      </div>
+    </a>
+
+    <div class="navbar-nav">
+      <a href="dashboard.html">Panel de Control</a>
+      <a href="planificacion.html" class="active">Rutas</a>
+      <a href="#">Comunidad</a>
+    </div>
+
+    <div class="navbar-actions">
+      <button class="icon-btn" aria-label="Notificaciones">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      </button>
+      <div class="avatar">YM</div>
+    </div>
+  </nav>
+
+  <!-- ===== LAYOUT ===== -->
+  <div class="planificacion-layout">
+
+    <!-- Left Sidebar -->
+    <aside class="plan-sidebar">
+      <div class="plan-sidebar-brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="brand-text">
+          <h4>Movefy</h4>
+          <span>Seguridad de Precisión</span>
+        </div>
+      </div>
+
+      <nav class="plan-nav">
+        <a href="dashboard.html" class="plan-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Panel de Control
+        </a>
+        <a href="planificacion.html" class="plan-nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Rutas
+        </a>
+        <a href="#" class="plan-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Comunidad
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Center Panel -->
+    <main class="plan-content">
+      <h1>Planificación de Viaje</h1>
+      <p>Define tu camino con datos de seguridad en tiempo real.</p>
+
+      <!-- Origin & Destination -->
+      <div class="plan-inputs">
+        <div class="plan-input-group">
+          <span class="input-label">Origen</span>
+          <div class="plan-input-field">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="10" stroke-dasharray="4 4"/></svg>
+            <input type="text" id="inputOrigen" value="Av. Javier Prado, San Isidro" placeholder="Punto de origen">
+          </div>
+        </div>
+
+        <div class="plan-input-group">
+          <span class="input-label">Destino</span>
+          <div class="plan-input-field">
+            <svg width="18" height="18" class="cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l3-3 3 3"/><path d="M8 6v8a4 4 0 0 0 8 0"/><path d="M16 6v.01"/></svg>
+            <input type="text" id="inputDestino" value="Plaza San Martin, Cercado" placeholder="Punto de destino">
+          </div>
+        </div>
+      </div>
+
+      <div class="plan-inputs-divider"></div>
+
+      <!-- Route Options -->
+      <div class="plan-routes">
+        <!-- Fast Route -->
+        <div class="route-option" id="routeFast" data-route="fast">
+          <span class="route-option-badge fast">Más Rápida</span>
+          <div class="route-option-header">
+            <div class="route-option-icon fast-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div>
+              <h3>Ruta Rápida</h3>
+              <span class="route-meta">18 min • 4.2 km</span>
+            </div>
+          </div>
+          <p>Prioriza avenidas principales y flujo de alta velocidad. Puede pasar por zonas de alta actividad.</p>
+        </div>
+
+        <!-- Safe Route (Recommended) -->
+        <div class="route-option recommended selected" id="routeSafe" data-route="safe">
+          <span class="route-option-badge safe">Recomendada</span>
+          <div class="route-option-header">
+            <div class="route-option-icon safe-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <h3>Ruta Segura</h3>
+              <span class="route-meta">24 min • 5.1 km</span>
+            </div>
+          </div>
+          <p>Evita de forma inteligente <strong>puntos críticos de criminalidad</strong> y áreas de baja visibilidad usando corredores monitoreados.</p>
+          <div class="route-safety-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            98% Calificación de Seguridad
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="plan-actions">
+        <button class="plan-new-route-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Planear Nueva Ruta
+        </button>
+        <button class="plan-start-nav-btn" id="startNavBtn">
+          Iniciar Navegación
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        </button>
+      </div>
+    </main>
+
+    <!-- Map Panel -->
+    <div class="plan-map">
+      <img src="img/map-dark.jpg" alt="Mapa de rutas" class="plan-map-bg">
+
+      <!-- Live indicator -->
+      <div class="plan-map-live">
+        <span class="live-dot"></span>
+        Datos en Vivo Activados
+      </div>
+
+      <!-- Route line -->
+      <div class="plan-route-line"></div>
+
+      <!-- Danger zones -->
+      <div class="plan-danger-zone"></div>
+      <div class="plan-danger-zone"></div>
+
+      <!-- Map Controls -->
+      <div class="map-controls">
+        <button class="map-control-btn" aria-label="Zoom in">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <button class="map-control-btn" aria-label="Zoom out">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <button class="map-control-btn" aria-label="Capas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Legend -->
+      <div class="plan-map-legend">
+        <h4>Leyenda del Mapa</h4>
+        <div class="legend-item">
+          <span class="legend-dot cyan"></span>
+          Ruta Segura
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot gray"></span>
+          Ruta Rápida
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot red"></span>
+          Zonas de Riesgo (Hotspots)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/planificacion.js"></script>
+</body>
+</html>
