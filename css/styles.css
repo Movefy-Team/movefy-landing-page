@@ -238,6 +238,22 @@ p {
   height: 32px;
 }
 
+.navbar-logo .logo-img {
+  height: 36px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: opacity var(--transition-fast);
+}
+
+.navbar-logo .logo-img:hover {
+  opacity: 0.9;
+}
+
+.footer-logo-img {
+  height: 32px;
+  width: auto;
+}
+
 .navbar-logo .logo-text {
   font-size: var(--font-size-xl);
   font-weight: 700;

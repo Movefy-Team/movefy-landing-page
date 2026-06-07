@@ -12,23 +12,14 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/landing.css">
   
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231B2838'/%3E%3Cpath d='M16 6l8 5v10l-8 5-8-5V11l8-5z' fill='%2300D4AA'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="img/logo-movefy.png">
 </head>
 <body>
 
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" id="navbar">
     <a href="index.html" class="navbar-logo">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <circle cx="18" cy="18" r="16" stroke="#00D4AA" stroke-width="2" fill="none"/>
-        <path d="M12 18C12 14.7 14.7 12 18 12C21.3 12 24 14.7 24 18" stroke="#00D4AA" stroke-width="2" stroke-linecap="round"/>
-        <path d="M14 22L18 14L22 22" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="18" cy="18" r="2" fill="#00D4AA"/>
-      </svg>
-      <div>
-        <span class="logo-text">movefy</span>
-        <span class="logo-subtitle">Rutas seguras, viajes inteligentes</span>
-      </div>
+      <img src="img/logo-movefy.png" alt="Movefy Logo" class="logo-img">
     </a>
 
     <div class="navbar-nav" id="navLinks">
@@ -36,11 +27,6 @@
       <a href="#features">Seguridad</a>
       <a href="#fleet">Flota</a>
       <a href="#cta">Contacto</a>
-      <a href="login.html">Acceso</a>
-    </div>
-
-    <div class="navbar-actions">
-      <a href="login.html" class="btn btn-primary btn-sm" style="border-radius: var(--radius-full);">Empezar</a>
     </div>
   </nav>
 
@@ -51,11 +37,10 @@
         <h1>Muévete con libertad, viaja con <span>seguridad</span></h1>
         <p>La primer plataforma inteligente que prioriza tu integridad. Evita zonas de riesgo, reduce tiempos de traslado y toma decisiones informadas con datos en tiempo real.</p>
         <div class="hero-buttons">
-          <a href="login.html" class="btn btn-primary">
+          <a href="#features" class="btn btn-primary">
             Empezar mi viaje
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
-          <a href="#features" class="btn btn-secondary">Conoce más</a>
+          <a href="#fleet" class="btn btn-secondary">Conoce más</a>
         </div>
       </div>
 
@@ -95,7 +80,7 @@
           </div>
           <h3>Rutas Dinámicas</h3>
           <p>Recálculo instantáneo basado en tráfico, clima y zonas de riesgo detectadas por IA.</p>
-          <a href="#" class="feature-link">
+          <a href="rutas.html" class="feature-link">
             Descubre más
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
@@ -108,7 +93,7 @@
           </div>
           <h3>Escudo de Seguridad</h3>
           <p>Protocolos de emergencia automáticos y monitoreo biométrico del conductor integrado.</p>
-          <a href="#" class="feature-link">
+          <a href="seguridad.html" class="feature-link">
             Protocolos
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
@@ -121,7 +106,7 @@
           </div>
           <h3>Analítica Predictiva</h3>
           <p>Visualización de datos avanzada para reducir el consumo de combustible hasta en un 25%.</p>
-          <a href="#" class="feature-link">
+          <a href="analitica.html" class="feature-link">
             Ver informes
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
@@ -153,7 +138,7 @@
         </div>
 
         <div class="fleet-info animate-on-scroll animate-delay-2">
-          <div class="fleet-info-item">
+          <a href="analitica.html" class="fleet-info-card">
             <div class="fleet-info-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg>
             </div>
@@ -161,27 +146,36 @@
               <h4>Huella de Carbono</h4>
               <p>Reducción garantizada de emisiones por optimización de rutas.</p>
             </div>
-          </div>
+            <div class="card-arrow">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </a>
 
-          <div class="fleet-stat-card">
-            <div class="fleet-stat-icon">
+          <a href="seguridad.html" class="fleet-info-card stat-highlight">
+            <div class="fleet-info-icon highlight">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
             </div>
             <div>
               <div class="stat-value">99.9%</div>
-              <div class="stat-label">Fiabilidad</div>
+              <div class="stat-label">Fiabilidad en rutas sugeridas</div>
             </div>
-          </div>
+            <div class="card-arrow">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </a>
 
-          <div class="fleet-info-item">
+          <a href="rutas.html" class="fleet-info-card">
             <div class="fleet-info-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
             <div>
               <h4>Infraestructura Cloud</h4>
-              <p>Nuestra infraestructura cloud garantiza operatividad ininterrumpida.</p>
+              <p>Garantizamos operatividad ininterrumpida las 24 horas.</p>
             </div>
-          </div>
+            <div class="card-arrow">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -192,9 +186,9 @@
     <div class="container">
       <div class="cta-card animate-on-scroll">
         <h2>¿Listo para transformar su logística urbana?</h2>
-        <p>Únase a las más de 500 empresas que ya están ahorrando tiempo y mejorando la seguridad de sus empleados con Movefy.</p>
+        <p>Únase a las más de 500 empresas que ya están ahorrando tiempo y mejorando la seguridad de sus empleados con SafeRoute.</p>
         <div class="cta-buttons">
-          <a href="login.html" class="btn btn-primary btn-lg">Empezar ahora gratis</a>
+          <a href="#features" class="btn btn-primary btn-lg">Empezar ahora gratis</a>
           <a href="#" class="btn btn-dark btn-lg">Hablar con un experto</a>
         </div>
       </div>
@@ -204,51 +198,29 @@
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="logo-text">
-            <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
-              <circle cx="18" cy="18" r="16" stroke="#00D4AA" stroke-width="2" fill="none"/>
-              <path d="M12 18C12 14.7 14.7 12 18 12C21.3 12 24 14.7 24 18" stroke="#00D4AA" stroke-width="2" stroke-linecap="round"/>
-              <path d="M14 22L18 14L22 22" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="18" cy="18" r="2" fill="#00D4AA"/>
-            </svg>
-            movefy
+      <div class="footer-grid" style="grid-template-columns: 1fr; text-align: center; justify-items: center;">
+        <div class="footer-brand" style="display: flex; flex-direction: column; align-items: center;">
+          <div class="logo-text" style="justify-content: center;">
+            <img src="img/logo-movefy.png" alt="Movefy" class="footer-logo-img">
           </div>
-          <p>© 2026 Movefy. Innovación en logística urbana y navegación de alta precisión. Diseñado para un futuro más seguro y eficiente en las ciudades del mañana.</p>
-          <div class="footer-social">
-            <a href="#" aria-label="Twitter">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <p style="margin: 0 auto; max-width: 400px; margin-bottom: 24px;">Innovación en logística urbana y navegación de alta precisión. Diseñado para un futuro más seguro en las ciudades del mañana.</p>
+          <div class="footer-social" style="justify-content: center;">
+            <a href="#" aria-label="Website">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             </a>
-            <a href="#" aria-label="LinkedIn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <a href="#" aria-label="Team">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </a>
           </div>
-        </div>
-
-        <div class="footer-column">
-          <h4>Producto</h4>
-          <a href="#">Soluciones</a>
-          <a href="#">Seguridad</a>
-          <a href="#">Precios</a>
-          <a href="#">API & Devs</a>
-        </div>
-
-        <div class="footer-column">
-          <h4>Legal</h4>
-          <a href="#">Privacidad</a>
-          <a href="#">Términos</a>
-          <a href="#">Documentación</a>
-          <a href="#">Soporte</a>
         </div>
       </div>
 
       <div class="footer-bottom">
+        <span>© 2026 Movefy. Todos los derechos reservados.</span>
         <div class="footer-status">
           <span class="status-dot"></span>
-          <span>Estado del Sistema: <a href="#">Operativo</a></span>
+          <span>Sistema <a href="#">Operativo</a></span>
         </div>
-        <span>Versión v4.2.0-stable</span>
       </div>
     </div>
   </footer>

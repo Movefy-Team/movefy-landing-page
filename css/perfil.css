@@ -41,6 +41,10 @@
   box-shadow: none;
 }
 
+.perfil-page .navbar .logo-img {
+  filter: none;
+}
+
 .perfil-page .navbar .logo-text {
   color: var(--text-dark);
 }
