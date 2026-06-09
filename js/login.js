@@ -40,6 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Check simulated database (localStorage)
+      const storedEmail = localStorage.getItem('movefy_email');
+      const storedPassword = localStorage.getItem('movefy_password');
+      
+      // Allow admin shortcut OR the registered user
+      const isRegisteredUser = (username === storedEmail && password === storedPassword);
+      const isAdmin = (username === 'admin@movefy.com' && password === 'admin123');
+
+      if (!isRegisteredUser && !isAdmin) {
+        shakeElement(submitBtn);
+        // Show a brief error message
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Datos incorrectos';
+        submitBtn.style.background = '#EF4444';
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.style.background = '';
+        }, 2000);
+        return;
+      }
+
       // Loading state
       submitBtn.disabled = true;
       submitBtn.innerHTML = `
@@ -51,8 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Simulate login delay
       setTimeout(() => {
-        // Store user for profile page
-        localStorage.setItem('movefy_user', username);
+        if(isAdmin) {
+          localStorage.setItem('movefy_nombre', 'Admin Movefy');
+          localStorage.setItem('movefy_email', 'admin@movefy.com');
+        }
         
         // Navigate to profile selection
         document.body.style.opacity = '0';

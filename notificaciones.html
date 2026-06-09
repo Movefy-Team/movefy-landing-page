@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movefy - Notificaciones</title>
+  <meta name="description" content="Centro de notificaciones de Movefy. Alertas de tránsito, incidencias y logros de seguridad.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <style>
+    .notif-main { padding: 76px 20px 100px; max-width: 520px; margin: 0 auto; animation: fadeInUp 0.35s ease; }
+
+    .notif-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .notif-header-left { display: flex; align-items: center; gap: 10px; }
+    .notif-back { display: flex; align-items: center; gap: 4px; background: none; border: none; color: #64748B; font-size: 14px; cursor: pointer; padding: 6px 10px; border-radius: 8px; transition: all 0.2s; text-decoration: none; }
+    .notif-back:hover { background: #F1F5F9; color: #1E293B; }
+    .notif-header h1 { font-size: 20px; font-weight: 700; color: #1E293B; }
+
+    .mark-read-btn { background: none; border: none; color: var(--primary-cyan); font-size: 13px; font-weight: 600; cursor: pointer; padding: 6px 12px; border-radius: 8px; transition: all 0.2s; }
+    .mark-read-btn:hover { background: #E0FBF4; }
+
+    /* Notification Items */
+    .notif-item {
+      display: flex; gap: 14px; padding: 16px;
+      background: #FFFFFF; border: 1px solid #E2E8F0;
+      border-radius: 14px; margin-bottom: 10px; transition: all 0.2s; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .notif-item:hover { background: #F8FAFC; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .notif-item.unread { border-left: 3px solid var(--primary-cyan); }
+
+    .notif-item-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .notif-item-icon.danger  { background: #FEE2E2; color: #DC2626; }
+    .notif-item-icon.warning { background: #FEF3C7; color: #D97706; }
+    .notif-item-icon.success { background: #E0FBF4; color: #0E9F82; }
+    .notif-item-icon.info    { background: #DBEAFE; color: #2563EB; }
+
+    .notif-item-content { flex: 1; min-width: 0; }
+    .notif-item-content h4 { font-size: 14px; font-weight: 600; color: #1E293B; margin-bottom: 4px; }
+    .notif-item-content p { font-size: 12px; color: #64748B; line-height: 1.4; }
+
+    .notif-time { font-size: 11px; color: #94A3B8; white-space: nowrap; flex-shrink: 0; }
+
+    /* Section Labels */
+    .notif-section-label { font-size: 13px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
+  </style>
+</head>
+<body class="dashboard-page">
+
+  <!-- Top Bar -->
+  <header class="dash-topbar">
+    <a href="index.html" class="dash-topbar-logo"><img src="img/logo-movefy.png" alt="Movefy Logo" class="logo-img"></a>
+    <div class="dash-topbar-actions">
+      <a href="notificaciones.html" class="dash-notif-btn active" aria-label="Notificaciones">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      </a>
+      <a href="perfil.html" class="dash-avatar">YM</a>
+    </div>
+  </header>
+
+  <main class="notif-main">
+    <div class="notif-header">
+      <div class="notif-header-left">
+        <a href="dashboard.html" class="notif-back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Volver
+        </a>
+        <h1>Notificaciones</h1>
+      </div>
+      <button class="mark-read-btn" id="markReadBtn">Marcar todo como leído</button>
+    </div>
+
+    <!-- Today -->
+    <div class="notif-section-label">Hoy</div>
+
+    <div class="notif-item unread">
+      <div class="notif-item-icon danger">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="notif-item-content">
+        <h4>⚠️ Alerta de tránsito</h4>
+        <p>Accidente reportado en la Vía Expresa cerca de la estación Canaval. Se recomienda ruta alternativa por Av. Arequipa.</p>
+      </div>
+      <span class="notif-time">hace 5 min</span>
+    </div>
+
+    <div class="notif-item unread">
+      <div class="notif-item-icon warning">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div class="notif-item-content">
+        <h4>🚧 Calle bloqueada</h4>
+        <p>Manifestación en progreso en la Av. Abancay. Evita la zona centro entre las 3:00 PM y 6:00 PM.</p>
+      </div>
+      <span class="notif-time">hace 22 min</span>
+    </div>
+
+    <div class="notif-item unread">
+      <div class="notif-item-icon success">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <div class="notif-item-content">
+        <h4>🏆 ¡Logro desbloqueado!</h4>
+        <p>Has completado 7 días consecutivos de caminatas seguras. Ganaste la insignia "Madrugador".</p>
+      </div>
+      <span class="notif-time">hace 1 hr</span>
+    </div>
+
+    <!-- Yesterday -->
+    <div class="notif-section-label">Ayer</div>
+
+    <div class="notif-item">
+      <div class="notif-item-icon danger">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="notif-item-content">
+        <h4>🚨 Zona de riesgo detectada</h4>
+        <p>Se reportaron 3 incidentes en la cuadra 12 de la Av. Colonial en las últimas 2 horas.</p>
+      </div>
+      <span class="notif-time">Ayer 9:15 PM</span>
+    </div>
+
+    <div class="notif-item">
+      <div class="notif-item-icon info">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div class="notif-item-content">
+        <h4>📊 Resumen semanal</h4>
+        <p>Recorriste 48.6 km esta semana con un puntaje de seguridad promedio del 92%. ¡Excelente!</p>
+      </div>
+      <span class="notif-time">Ayer 6:00 PM</span>
+    </div>
+
+    <div class="notif-item">
+      <div class="notif-item-icon success">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <div class="notif-item-content">
+        <h4>✅ Ruta verificada</h4>
+        <p>Tu ruta frecuente "Casa → Universidad" mantiene un puntaje de seguridad del 95% esta semana.</p>
+      </div>
+      <span class="notif-time">Ayer 8:00 AM</span>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="dash-bottom-nav">
+    <a href="dashboard.html" class="bottom-nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="dashboard.html?section=destinos" class="bottom-nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>Favoritos</span>
+    </a>
+    <a href="historial.html" class="bottom-nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Historial</span>
+    </a>
+    <a href="perfil.html" class="bottom-nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Perfil</span>
+    </a>
+  </nav>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Mark all as read
+    document.getElementById('markReadBtn').addEventListener('click', function() {
+      document.querySelectorAll('.notif-item.unread').forEach(item => {
+        item.classList.remove('unread');
+      });
+      this.textContent = '✓ Todo leído';
+      this.style.color = '#00D4AA';
+      localStorage.setItem('movefy_notifs_read', 'true');
+      
+      // Hide any badge
+      const badges = document.querySelectorAll('.notif-badge');
+      badges.forEach(b => b.style.display = 'none');
+    });
+
+    // Check if already read on load
+    if (localStorage.getItem('movefy_notifs_read') === 'true') {
+      document.querySelectorAll('.notif-item.unread').forEach(item => {
+        item.classList.remove('unread');
+      });
+      const btn = document.getElementById('markReadBtn');
+      if(btn) {
+        btn.textContent = '✓ Todo leído';
+        btn.style.color = '#00D4AA';
+      }
+    }
+  </script>
+</body>
+</html>
+

@@ -1,147 +1,222 @@
-/* ========================================
-   MOVEFY - Dashboard JavaScript
-   Route toggle, report interactions, map controls
-   ======================================== */
+/* =============================================
+   MOVEFY DASHBOARD - JavaScript (Passenger View)
+   ============================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- Route Toggle ---
-  const toggleBtns = document.querySelectorAll('.route-toggle-btn');
-  const statValue = document.querySelector('.stat-card.highlight .stat-value');
-  const etaValue = document.querySelector('.stat-card:not(.highlight) .stat-value');
+  // --- Global Navbar Avatar Sync ---
+  const savedName = localStorage.getItem('movefy_nombre');
+  if (savedName) {
+    const parts = savedName.trim().split(' ');
+    let initials = parts[0].charAt(0).toUpperCase();
+    if (parts.length > 1) initials += parts[parts.length - 1].charAt(0).toUpperCase();
+    document.querySelectorAll('.avatar').forEach(el => {
+      if(!el.querySelector('img')) el.textContent = initials;
+    });
+  }
 
-  toggleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggleBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  // ---- Greeting with dynamic time ----
+  const greetingText = document.getElementById('greetingText');
+  const greetingDate = document.getElementById('greetingDate');
 
-      const route = btn.getAttribute('data-route');
-      if (route === 'seguro') {
-        if (statValue) statValue.textContent = '98%';
-        if (etaValue) etaValue.textContent = '18m';
+  function updateGreeting() {
+    const now = new Date();
+    const hour = now.getHours();
+    let saludo = '¡Hola';
+    if (hour < 12) saludo = '¡Buenos días';
+    else if (hour < 18) saludo = '¡Buenas tardes';
+    else saludo = '¡Buenas noches';
+
+    const savedName = localStorage.getItem('movefy_nombre') || 'Usuario';
+    const firstName = savedName.split(' ')[0];
+
+    if (greetingText) greetingText.textContent = `${saludo}, ${firstName}!`;
+
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaStr = now.toLocaleDateString('es-PE', opciones);
+    if (greetingDate) greetingDate.textContent = fechaStr.charAt(0).toUpperCase() + fechaStr.slice(1);
+  }
+  updateGreeting();
+
+  // ---- Section Navigation ----
+  const sections = document.querySelectorAll('.dash-section');
+  const bottomNavItems = document.querySelectorAll('.bottom-nav-item[data-section]');
+
+  function showSection(sectionId) {
+    sections.forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(sectionId);
+    if (target) target.classList.add('active');
+
+    // Update bottom nav active state
+    bottomNavItems.forEach(item => {
+      if (item.dataset.section === sectionId) {
+        item.classList.add('active');
       } else {
-        if (statValue) statValue.textContent = '82%';
-        if (etaValue) etaValue.textContent = '12m';
+        item.classList.remove('active');
+      }
+    });
+  }
+
+  // Check URL params for initial section
+  const urlParams = new URLSearchParams(window.location.search);
+  const sectionParam = urlParams.get('section');
+  if (sectionParam === 'destinos') {
+    showSection('sectionDestinos');
+  }
+
+  // Quick action cards with data-section
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const sectionId = el.dataset.section;
+      if (sectionId) {
+        e.preventDefault();
+        showSection(sectionId);
       }
     });
   });
 
-  // --- Report Item Click ---
-  const reportItems = document.querySelectorAll('.report-item');
-  reportItems.forEach(item => {
-    item.addEventListener('click', () => {
-      reportItems.forEach(i => i.style.background = '');
-      item.style.background = 'var(--bg-light)';
-      
-      // Flash the safe zone
-      const safeZone = document.querySelector('.safe-zone-overlay');
-      if (safeZone) {
-        safeZone.style.borderColor = 'var(--warning-orange)';
-        safeZone.style.background = 'rgba(249, 115, 22, 0.08)';
-        setTimeout(() => {
-          safeZone.style.borderColor = 'var(--primary-cyan)';
-          safeZone.style.background = 'rgba(0, 212, 170, 0.08)';
-        }, 1500);
-      }
+  // Back buttons
+  document.querySelectorAll('.back-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showSection(btn.dataset.section);
     });
   });
 
-  // --- Report Button ---
+  // ---- Viajes Tabs ----
+  const viajesTabs = document.querySelectorAll('.viajes-tab');
+  viajesTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      viajesTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      document.querySelectorAll('.viajes-content').forEach(c => c.classList.remove('active'));
+      const targetTab = document.getElementById('tab' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1));
+      if (targetTab) targetTab.classList.add('active');
+    });
+  });
+
+  // ---- SOS Timer ----
+  const sosActivateBtn = document.getElementById('sosActivateBtn');
+  const sosCancelBtn = document.getElementById('sosCancelBtn');
+  const sosTimerText = document.getElementById('sosTimerText');
+  const sosTimerRing = document.getElementById('sosTimerRing');
+  let sosInterval = null;
+  let sosCount = 10;
+
+  function startSOS() {
+    sosCount = 10;
+    sosTimerText.textContent = sosCount;
+    sosTimerRing.classList.add('active');
+    sosActivateBtn.classList.add('hidden');
+    sosCancelBtn.classList.remove('hidden');
+
+    sosInterval = setInterval(() => {
+      sosCount--;
+      sosTimerText.textContent = sosCount;
+
+      if (sosCount <= 0) {
+        clearInterval(sosInterval);
+        sosTimerText.textContent = '!';
+        // Simulate alert sent
+        showToast('🚨 Alerta SOS enviada a tus contactos de emergencia y autoridades.');
+        setTimeout(() => cancelSOS(), 3000);
+      }
+    }, 1000);
+  }
+
+  function cancelSOS() {
+    clearInterval(sosInterval);
+    sosCount = 10;
+    sosTimerText.textContent = '10';
+    sosTimerRing.classList.remove('active');
+    sosActivateBtn.classList.remove('hidden');
+    sosCancelBtn.classList.add('hidden');
+  }
+
+  if (sosActivateBtn) sosActivateBtn.addEventListener('click', startSOS);
+  if (sosCancelBtn) sosCancelBtn.addEventListener('click', () => {
+    cancelSOS();
+    showToast('SOS cancelado correctamente.');
+  });
+
+  // ---- Toast Notifications ----
+  function showToast(message) {
+    const existing = document.querySelector('.dash-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'dash-toast';
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #FFFFFF;
+      color: #1E293B;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 9999;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      animation: toastIn 0.3s ease;
+      max-width: 90%;
+      text-align: center;
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.animation = 'toastOut 0.3s ease forwards';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Add toast animations
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes toastIn { from { opacity:0; transform: translateX(-50%) translateY(-10px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+    @keyframes toastOut { from { opacity:1; transform: translateX(-50%) translateY(0); } to { opacity:0; transform: translateX(-50%) translateY(-10px); } }
+  `;
+  document.head.appendChild(style);
+
+  // ---- Cuidado Button ----
+  const cuidadoBtn = document.getElementById('cuidadoBtn');
+  if (cuidadoBtn) {
+    cuidadoBtn.addEventListener('click', () => {
+      showToast('⚠️ Revisa las alertas activas en tu zona antes de salir.');
+    });
+  }
+
+  // ---- Report Button ----
   const reportBtn = document.getElementById('reportBtn');
   if (reportBtn) {
     reportBtn.addEventListener('click', () => {
-      // Simple modal simulation
-      const modal = document.createElement('div');
-      modal.style.cssText = `
-        position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-        display: flex; align-items: center; justify-content: center; z-index: 9999;
-        animation: fadeIn 0.2s ease;
-      `;
-      modal.innerHTML = `
-        <div style="background: white; border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; text-align: center;">
-          <div style="width: 56px; height: 56px; border-radius: 50%; background: #E0FBF4; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          </div>
-          <h3 style="margin-bottom: 8px; color: #1E293B;">Reportar Incidente</h3>
-          <p style="color: #64748B; font-size: 14px; margin-bottom: 24px;">Esta función estará disponible próximamente. ¡Gracias por contribuir a la seguridad!</p>
-          <button onclick="this.closest('div[style]').parentElement.remove()" style="padding: 12px 32px; background: #1B2838; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">Entendido</button>
-        </div>
-      `;
-      document.body.appendChild(modal);
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.remove();
-      });
+      showToast('📝 Función de reporte abierta. (Prototipo)');
     });
   }
 
-  // --- Map Controls ---
-  let zoomLevel = 1;
-  const mapBg = document.querySelector('.dashboard-map-bg');
+  // ---- Planear viaje button ----
+  const planearBtn = document.querySelector('.planear-viaje-btn');
+  if (planearBtn) {
+    planearBtn.addEventListener('click', () => {
+      window.location.href = 'planificacion.html';
+    });
+  }
 
-  document.querySelectorAll('.map-control-btn').forEach((btn, index) => {
+  // ---- Ver mapa buttons ----
+  document.querySelectorAll('.viaje-ver-mapa').forEach(btn => {
     btn.addEventListener('click', () => {
-      switch(index) {
-        case 0: // Zoom in
-          zoomLevel = Math.min(zoomLevel + 0.1, 2);
-          if (mapBg) mapBg.style.transform = `scale(${zoomLevel})`;
-          break;
-        case 1: // Zoom out
-          zoomLevel = Math.max(zoomLevel - 0.1, 0.8);
-          if (mapBg) mapBg.style.transform = `scale(${zoomLevel})`;
-          break;
-        case 2: // My location
-          btn.style.background = 'var(--primary-cyan-bg)';
-          btn.style.color = 'var(--primary-cyan)';
-          setTimeout(() => {
-            btn.style.background = '';
-            btn.style.color = '';
-          }, 2000);
-          break;
-        case 3: // Layers
-          btn.classList.toggle('active');
-          break;
-      }
-
-      // Button press feedback
-      btn.style.transform = 'scale(0.9)';
-      setTimeout(() => { btn.style.transform = ''; }, 150);
+      window.location.href = 'planificacion.html';
     });
   });
 
-  // --- Swap locations ---
-  const swapBtn = document.querySelector('.map-swap-btn');
-  if (swapBtn) {
-    swapBtn.addEventListener('click', () => {
-      const rows = document.querySelectorAll('.map-location-row span:not(.cyan)');
-      const cyanRow = document.querySelector('.map-location-row .cyan');
-      if (rows.length > 0 && cyanRow) {
-        const temp = rows[0].textContent;
-        rows[0].textContent = cyanRow.textContent;
-        cyanRow.textContent = temp;
-      }
-      
-      // Rotate animation
-      swapBtn.style.transform = 'translateY(-50%) rotate(180deg)';
-      setTimeout(() => {
-        swapBtn.style.transform = 'translateY(-50%)';
-      }, 300);
+  // ---- Destino card clicks ----
+  document.querySelectorAll('.destino-card:not(.recomendado)').forEach(card => {
+    card.addEventListener('click', () => {
+      window.location.href = 'planificacion.html';
     });
-  }
+  });
 
-  // --- Animate stats on load ---
-  const animateValue = (el, start, end, duration, suffix = '') => {
-    const startTime = performance.now();
-    const animate = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.floor(eased * (end - start) + start);
-      el.textContent = current + suffix;
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  };
-
-  if (statValue) animateValue(statValue, 0, 98, 1500, '%');
-  if (etaValue) animateValue(etaValue, 0, 12, 1000, 'm');
 });

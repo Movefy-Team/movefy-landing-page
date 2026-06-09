@@ -132,4 +132,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.opacity = '1';
   });
 
+  // --- Sync Global Avatar ---
+  const savedName = localStorage.getItem('movefy_nombre');
+  if (savedName) {
+    const dashAvatars = document.querySelectorAll('.dash-avatar');
+    dashAvatars.forEach(avatar => {
+      const parts = savedName.trim().split(' ');
+      let initials = parts[0].charAt(0).toUpperCase();
+      if (parts.length > 1) {
+        initials += parts[parts.length - 1].charAt(0).toUpperCase();
+      }
+      avatar.textContent = initials;
+    });
+  }
+
+  // --- Sync Notification Badge ---
+  if (localStorage.getItem('movefy_notifs_read') === 'true') {
+    const badges = document.querySelectorAll('.notif-badge');
+    badges.forEach(b => b.style.display = 'none');
+  }
+
 });

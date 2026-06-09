@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movefy - Regístrate</title>
+  <meta name="description" content="Crea tu cuenta en Movefy para acceder a rutas seguras en tiempo real.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body class="login-page">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="navbar-logo">
+      <img src="img/logo-movefy.png" alt="Movefy Logo" class="logo-img">
+    </a>
+    <div class="navbar-actions">
+      <!-- Icons removed as requested -->
+    </div>
+  </nav>
+
+  <!-- ===== MAP BACKGROUND ===== -->
+  <div class="login-background">
+    <img src="img/map-bg-tech.png" alt="Mapa de Lima Tecnológico" loading="eager">
+  </div>
+
+  <!-- ===== REGISTER CONTENT ===== -->
+  <main class="login-content">
+    <div class="login-card">
+      <!-- Shield Icon -->
+      <div class="login-shield">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+        </svg>
+      </div>
+
+      <h1>Crear Cuenta</h1>
+      <p class="login-subtitle">Únete a la red de navegación segura</p>
+
+      <!-- Register Form -->
+      <form class="login-form" id="registerForm">
+        <div class="input-group">
+          <label for="fullname">Nombre completo</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="fullname" name="fullname" placeholder="Ej. Juan Pérez" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="email">Correo electrónico</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="telefono">Teléfono personal</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ej. 987654321" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="contacto1">Contacto de emergencia</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </span>
+            <input type="text" id="contacto1" name="contacto1" placeholder="Ej. Mamá 999888777" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password" required>
+            <button type="button" class="input-action" id="togglePassword" aria-label="Mostrar contraseña">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-submit" id="submitBtn">
+          Regístrate
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <div class="login-register">
+        ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Badges Removed -->
+
+  <!-- Status Pill -->
+  <div class="status-pill">
+    <span class="status-dot"></span>
+    Sistemas Operativos
+  </div>
+
+  <script src="js/main.js"></script>
+  <!-- Simple JS for the register button to redirect to dashboard -->
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Save name, email, and password to simulate a database
+      const fullname = document.getElementById('fullname').value;
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      const telefono = document.getElementById('telefono').value;
+      const contacto1 = document.getElementById('contacto1').value;
+      
+      localStorage.setItem('movefy_nombre', fullname.trim());
+      localStorage.setItem('movefy_email', email.trim());
+      localStorage.setItem('movefy_password', pass.trim());
+      localStorage.setItem('movefy_telefono', telefono.trim());
+      localStorage.setItem('movefy_contacto1', contacto1.trim());
+      
+      // Simulate successful registration and redirect to dashboard
+      window.location.href = 'dashboard.html';
+    });
+    
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    if (togglePassword && password) {
+      togglePassword.addEventListener('click', function () {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.querySelector('.eye-icon').style.display = type === 'password' ? 'block' : 'none';
+        this.querySelector('.eye-off-icon').style.display = type === 'password' ? 'none' : 'block';
+      });
+    }
+  </script>
+</body>
+</html>
