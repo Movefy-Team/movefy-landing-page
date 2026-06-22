@@ -3,15 +3,195 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Movefy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movefy - Rutas Seguras para Lima</title>
+
+    <link rel="icon" href="favicon.ico">
 
     <link rel="stylesheet"
-          href="assets/styles/styles.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 
 <body>
 
-    <h1>Movefy</h1>
+    <nav class="navbar">
+
+        <div class="logo">
+            Movefy
+        </div>
+
+        <ul class="menu">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#problema">Problema</a></li>
+            <li><a href="#solucion">Solución</a></li>
+            <li><a href="#caracteristicas">Características</a></li>
+            <li><a href="#segmentos">Usuarios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+    </nav>
+
+    <section class="hero" id="inicio">
+
+        <h1>Encuentra la Ruta Más Segura en Lima</h1>
+
+        <p>
+            Movefy combina información de tráfico, seguridad ciudadana y reportes
+            en tiempo real para ayudarte a desplazarte de forma más segura,
+            eficiente y confiable.
+        </p>
+
+        <a href="#contacto" class="btn">
+            Comenzar Ahora
+        </a>
+
+    </section>
+
+    <section class="problema" id="problema">
+
+        <h2>La Problemática</h2>
+
+        <p>
+            Miles de estudiantes y trabajadores de Lima enfrentan diariamente
+            largas horas de tráfico, retrasos constantes e inseguridad durante
+            sus desplazamientos. Las aplicaciones actuales priorizan la rapidez,
+            pero no consideran los riesgos presentes en determinadas zonas de la ciudad.
+        </p>
+
+    </section>
+
+    <section class="solucion" id="solucion">
+
+        <h2>¿Qué es Movefy?</h2>
+
+        <p>
+            Movefy es una aplicación móvil que integra datos de tráfico,
+            incidentes urbanos y reportes ciudadanos para recomendar rutas
+            que equilibran seguridad y eficiencia. Nuestro objetivo es
+            brindar tranquilidad a quienes se movilizan diariamente por Lima.
+        </p>
+
+    </section>
+
+    <section class="caracteristicas" id="caracteristicas">
+
+        <h2>Características Principales</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <i class="fa-solid fa-route"></i>
+                <h3>Rutas Seguras</h3>
+                <p>
+                    Encuentra trayectos que evitan zonas de riesgo y mejoran tu seguridad.
+                </p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>Alertas en Tiempo Real</h3>
+                <p>
+                    Recibe notificaciones sobre incidentes, tráfico y zonas peligrosas.
+                </p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-users"></i>
+                <h3>Reportes Ciudadanos</h3>
+                <p>
+                    Colabora con la comunidad compartiendo información útil y actualizada.
+                </p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-shield-heart"></i>
+                <h3>Viaje Seguro</h3>
+                <p>
+                    Comparte tu ubicación en tiempo real y activa alertas SOS.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="segmentos" id="segmentos">
+
+        <h2>Usuarios Objetivo</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Estudiantes</h3>
+                <p>
+                    Traslados más seguros hacia universidades e institutos.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Trabajadores</h3>
+                <p>
+                    Optimización de tiempos y reducción de riesgos durante sus trayectos.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Padres de Familia</h3>
+                <p>
+                    Mayor tranquilidad gracias al monitoreo y seguimiento de rutas.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="contacto" id="contacto">
+
+        <h2>Contáctanos</h2>
+
+        <p class="contact-text">
+            ¿Deseas conocer más sobre Movefy o colaborar con nuestro proyecto?
+            Déjanos un mensaje.
+        </p>
+
+        <form>
+
+            <input
+                type="text"
+                placeholder="Nombre completo"
+                required>
+
+            <input
+                type="email"
+                placeholder="Correo electrónico"
+                required>
+
+            <textarea
+                rows="5"
+                placeholder="Escribe tu mensaje..."
+                required></textarea>
+
+            <button type="submit">
+                Enviar Mensaje
+            </button>
+
+        </form>
+
+    </section>
+
+    <footer>
+
+        <p>
+            © 2026 Movefy | Movilidad Segura e Inteligente para Lima Metropolitana
+        </p>
+
+    </footer>
 
     <script src="assets/scripts/main.js"></script>
 

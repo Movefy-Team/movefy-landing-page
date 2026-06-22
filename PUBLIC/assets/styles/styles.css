@@ -1,0 +1,279 @@
+:root{
+    --primary:#1B305B;
+    --secondary:#2ED1B9;
+    --secondary-light:#3DEEDC;
+    --gray:#A8B6C3;
+    --white:#FFFFFF;
+}
+
+/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:var(--white);
+    color:var(--primary);
+    line-height:1.6;
+}
+
+/* NAVBAR */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:var(--primary);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:32px;
+    font-weight:600;
+    color:var(--white);
+}
+
+.menu{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:var(--white);
+    font-weight:600;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:var(--secondary-light);
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 10%;
+}
+
+.hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:48px;
+    font-weight:600;
+    color:var(--primary);
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:800px;
+    font-size:18px;
+    margin-bottom:35px;
+}
+
+.btn{
+    text-decoration:none;
+    padding:15px 35px;
+    border-radius:10px;
+    font-weight:600;
+    color:var(--primary);
+    background:linear-gradient(
+        90deg,
+        var(--secondary),
+        var(--secondary-light)
+    );
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+/* SECTIONS */
+
+section{
+    padding:90px 10%;
+}
+
+section h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:40px;
+    font-weight:600;
+    text-align:center;
+    margin-bottom:30px;
+    color:var(--primary);
+}
+
+section > p{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    font-size:17px;
+}
+
+/* CARDS */
+
+.cards{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+}
+
+.card{
+    background:var(--white);
+    border:1px solid #e5e7eb;
+    width:280px;
+    padding:30px 20px;
+    border-radius:15px;
+    text-align:center;
+    transition:0.3s;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card i{
+    font-size:45px;
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.card h3{
+    font-family:'Inter',sans-serif;
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:10px;
+    color:var(--primary);
+}
+
+.card p{
+    font-size:15px;
+}
+
+/* CONTACTO */
+
+.contacto{
+    background:#f8fafc;
+}
+
+.contact-text{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+form{
+    max-width:600px;
+    margin:auto;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border:1px solid var(--gray);
+    border-radius:10px;
+    font-size:15px;
+    font-family:'Inter',sans-serif;
+}
+
+input:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--secondary);
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    color:var(--primary);
+
+    background:linear-gradient(
+        90deg,
+        var(--secondary),
+        var(--secondary-light)
+    );
+
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+}
+
+/* FOOTER */
+
+footer{
+    background:var(--primary);
+    color:var(--white);
+    text-align:center;
+    padding:25px;
+}
+
+footer p{
+    font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .navbar{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .menu{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    section h2{
+        font-size:32px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .card{
+        width:100%;
+    }
+
+}
