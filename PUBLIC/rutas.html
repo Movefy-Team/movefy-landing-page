@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movefy - Rutas Dinámicas</title>
+  <meta name="description" content="Rutas dinámicas con recálculo instantáneo basado en tráfico, clima y zonas de riesgo detectadas por IA.">
+  <link class="stylesheet" href="PUBLIC/assets/styles/styles.css">
+  <link class="stylesheet" href="PUBLIC/assets/styles/landing.css">
+  <link rel="icon" href="PUBLIC/favicon.ico">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="navbar-logo">
+      <img src="PUBLIC/assets/images/logo-movefy.png" alt="Movefy Logo" class="logo-img">
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html">Inicio</a>
+      <a href="rutas.html" class="active">Rutas</a>
+      <a href="seguridad.html">Seguridad</a>
+      <a href="analitica.html">Analítica</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="top" style="padding-bottom: 32px;">
+    <div class="container">
+      <div class="hero-content animate-on-scroll" style="max-width: 100%; text-align: center; margin: 0 auto;">
+        <h1>Rutas <span>Dinámicas</span></h1>
+        <p style="max-width: 640px; margin: 0 auto var(--spacing-xl);">Recálculo instantáneo basado en tráfico, clima y zonas de riesgo detectadas por inteligencia artificial. Cada segundo, tu ruta se adapta para mantenerte seguro.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section" style="padding: 48px 0 64px;">
+    <div class="container">
+      <div class="features-grid" style="grid-template-columns: 1fr 1fr; max-width: 900px; margin: 0 auto; gap: 32px;">
+        
+        <div class="feature-card animate-on-scroll" style="padding: 32px; border: 1px solid var(--border-color); border-radius: var(--radius-lg);">
+          <div class="feature-icon cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <h3>Recálculo en Tiempo Real</h3>
+          <p>Nuestro motor de rutas procesa más de 50,000 puntos de datos por segundo para ofrecerte el camino más seguro y rápido.</p>
+        </div>
+
+        <div class="feature-card animate-on-scroll animate-delay-1" style="padding: 32px; border: 1px solid var(--border-color); border-radius: var(--radius-lg);">
+          <div class="feature-icon dark">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3>Integración con Tráfico</h3>
+          <p>Conectamos con las APIs de tráfico de Lima para incorporar datos de congestión, obras viales y desvíos activos.</p>
+        </div>
+
+        <div class="feature-card animate-on-scroll animate-delay-2" style="padding: 32px; border: 1px solid var(--border-color); border-radius: var(--radius-lg);">
+          <div class="feature-icon blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h3>Zonas de Riesgo por IA</h3>
+          <p>Nuestro modelo de machine learning identifica patrones de criminalidad y te alerta antes de que entres en una zona peligrosa.</p>
+        </div>
+
+        <div class="feature-card animate-on-scroll animate-delay-3" style="padding: 32px; border: 1px solid var(--border-color); border-radius: var(--radius-lg);">
+          <div class="feature-icon cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Historial de Rutas</h3>
+          <p>Guarda y revisa tus rutas anteriores. Analiza patrones de viaje y optimiza tus trayectos recurrentes.</p>
+        </div>
+
+      </div>
+
+      <div style="text-align: center; margin-top: 48px;" class="animate-on-scroll">
+        <a href="index.html" class="btn btn-secondary">← Volver al inicio</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <span>© 2026 Movefy. Todos los derechos reservados.</span>
+        <div class="footer-status">
+          <span class="status-dot"></span>
+          <span>Sistema <a href="#">Operativo</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="PUBLIC/assets/scripts/main.js"></script>
+</body>
+</html>
