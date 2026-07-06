@@ -231,6 +231,7 @@ p {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  flex: 1;
 }
 
 .navbar-logo svg,
@@ -303,7 +304,21 @@ p {
 .navbar-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--spacing-md);
+  flex: 1;
+}
+
+.navbar-actions .btn-login {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  text-decoration: none;
+}
+
+.navbar-actions .btn-login:hover {
+  color: var(--primary-cyan);
 }
 
 .navbar-actions .icon-btn {

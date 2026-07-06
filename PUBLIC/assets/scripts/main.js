@@ -132,4 +132,41 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.opacity = '1';
   });
 
+  // --- Auth Navbar State ---
+  const sessionData = localStorage.getItem('movefy_session');
+  if (sessionData) {
+    try {
+      const session = JSON.parse(sessionData);
+      const navActions = document.querySelector('.navbar-actions');
+      if (navActions) {
+        navActions.innerHTML = `
+          <span class="user-welcome" style="color: rgba(255, 255, 255, 0.9); font-size: var(--font-size-sm); font-weight: 500; margin-right: var(--spacing-sm);">
+            Hola, <strong>${session.name}</strong>
+          </span>
+          <a href="dashboard.html" class="btn btn-sm btn-primary" style="margin-right: 8px; font-size: var(--font-size-xs); padding: 6px 12px;">Dashboard</a>
+          <button class="btn btn-sm btn-secondary btn-logout" style="border-color: rgba(255,255,255,0.25); color: var(--text-white); background: rgba(255,255,255,0.05); padding: 6px 12px; font-size: var(--font-size-xs);" onclick="handleLogout()">
+            Cerrar Sesión
+          </button>
+        `;
+      }
+
+      // Update hero start button to go to dashboard
+      const heroBtn = document.querySelector('.hero-buttons .btn-primary');
+      if (heroBtn) {
+        heroBtn.setAttribute('href', 'dashboard.html');
+        heroBtn.textContent = 'Ir a mi Dashboard';
+      }
+    } catch (err) {
+      console.error('Error parsing session:', err);
+    }
+  }
+
+  // Define global logout handler
+  window.handleLogout = function() {
+    if (confirm('¿Seguro que deseas cerrar sesión?')) {
+      localStorage.removeItem('movefy_session');
+      window.location.reload();
+    }
+  };
+
 });

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrarse - Movefy</title>
+  <meta name="description" content="Crea tu cuenta en Movefy para empezar a optimizar tus rutas y viajar de forma segura y eficiente por la ciudad.">
+  
+  <!-- Lucide Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="PUBLIC/assets/styles/styles.css">
+  <link rel="stylesheet" href="PUBLIC/assets/styles/auth.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="PUBLIC/favicon.ico">
+</head>
+<body class="auth-body">
+
+  <!-- Animated Glowing Background Blobs -->
+  <div class="auth-bg-blobs">
+    <div class="auth-blob auth-blob-1"></div>
+    <div class="auth-blob auth-blob-2"></div>
+  </div>
+
+  <div class="auth-container">
+    <!-- Back to Home Link -->
+    <a href="index.html" class="auth-back-link">
+      <i class="class lucide-arrow-left"></i>
+      <span>Volver al inicio</span>
+    </a>
+
+    <!-- Glassmorphic Form Card -->
+    <div class="auth-card">
+      <div class="auth-header">
+        <a href="index.html" class="auth-logo">
+          <img src="PUBLIC/assets/images/logo-movefy.png" alt="Movefy Logo">
+        </a>
+        <h2>Crea tu cuenta</h2>
+        <p>Regístrate para empezar a viajar de forma segura</p>
+      </div>
+
+      <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+        <!-- Full Name Input -->
+        <div class="auth-input-group">
+          <label for="name">Nombre Completo</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon"><i class="lucide-user"></i></span>
+            <input type="text" id="name" placeholder="Juan Pérez" required>
+          </div>
+        </div>
+
+        <!-- Email Input -->
+        <div class="auth-input-group">
+          <label for="email">Correo Electrónico</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon"><i class="lucide-mail"></i></span>
+            <input type="email" id="email" placeholder="nombre@correo.com" required>
+          </div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="auth-input-group">
+          <label for="password">Contraseña</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon"><i class="lucide-lock"></i></span>
+            <input type="password" id="password" placeholder="Mínimo 8 caracteres" minlength="8" required>
+            <button type="button" class="toggle-password" id="togglePasswordBtn" onclick="togglePasswordVisibility('password', 'passwordIcon')">
+              <i class="lucide-eye" id="passwordIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password Input -->
+        <div class="auth-input-group">
+          <label for="confirmPassword">Confirmar Contraseña</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon"><i class="lucide-lock"></i></span>
+            <input type="password" id="confirmPassword" placeholder="••••••••" required>
+            <button type="button" class="toggle-password" id="toggleConfirmPasswordBtn" onclick="togglePasswordVisibility('confirmPassword', 'confirmPasswordIcon')">
+              <i class="lucide-eye" id="confirmPasswordIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Terms and Conditions Checkbox -->
+        <label class="auth-terms">
+          <input type="checkbox" id="terms" required>
+          <span>Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a> de Movefy.</span>
+        </label>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary btn-auth-submit">
+          <span>Crear Cuenta</span>
+        </button>
+      </form>
+
+
+      <!-- Footer text -->
+      <div class="auth-footer-text">
+        ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Password visibility and Mock Registration Logic script -->
+  <script>
+    function togglePasswordVisibility(inputId, iconId) {
+      const passwordInput = document.getElementById(inputId);
+      const passwordIcon = document.getElementById(iconId);
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordIcon.classList.remove('lucide-eye');
+        passwordIcon.classList.add('lucide-eye-off');
+      } else {
+        passwordInput.type = 'password';
+        passwordIcon.classList.remove('lucide-eye-off');
+        passwordIcon.classList.add('lucide-eye');
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert('Las contraseñas no coinciden. Por favor, verifícalas.');
+        return;
+      }
+      
+      // Check localStorage for existing users
+      let users = [];
+      try {
+        const storedUsers = localStorage.getItem('movefy_users');
+        if (storedUsers) {
+          users = JSON.parse(storedUsers);
+        }
+      } catch (err) {
+        console.error('Error parsing users:', err);
+      }
+
+      // Check if email already registered
+      const userExists = users.some(u => u.email === email);
+      if (userExists) {
+        alert('Este correo electrónico ya está registrado. Por favor, inicia sesión o usa otro.');
+        return;
+      }
+
+      // Select submit button
+      const btn = document.querySelector('.btn-auth-submit');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span style="display: flex; align-items: center; gap: var(--spacing-sm);"><i class="lucide-loader animate-spin" style="animation: spin 1s linear infinite;"></i> Creando cuenta...</span>';
+      btn.disabled = true;
+
+      // Save user info
+      users.push({ name, email, password });
+      try {
+        localStorage.setItem('movefy_users', JSON.stringify(users));
+      } catch (err) {
+        console.error('Error saving user:', err);
+      }
+
+      // Mock delay
+      setTimeout(() => {
+        alert('¡Registro exitoso! Tu cuenta ha sido creada. Redirigiendo al inicio de sesión...');
+        window.location.href = 'login.html';
+      }, 1500);
+    }
+
+    function handleSocialRegister(provider) {
+      alert('Conectando con ' + provider + '...');
+    }
+  </script>
+
+  <!-- Add CSS keyframes for rotation -->
+  <style>
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+</body>
+</html>
