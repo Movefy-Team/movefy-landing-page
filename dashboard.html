@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Movefy</title>
+  <meta name="description" content="Navegación inteligente con rutas seguras en tiempo real en Lima con Movefy.">
+
+  <!-- Lucide Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="PUBLIC/assets/styles/styles.css?v=2">
+  <link rel="stylesheet" href="PUBLIC/assets/styles/dashboard.css?v=2">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="PUBLIC/favicon.ico">
+</head>
+<body class="dashboard-body">
+
+  <div class="app-container">
+    
+    <!-- Cabecera Principal -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="index.html" class="app-logo">
+          <img src="PUBLIC/assets/images/logo-movefy.png" alt="Movefy Logo">
+        </a>
+        <span class="header-subtitle">Panel Inteligente</span>
+      </div>
+
+      <!-- Menú de Navegación -->
+      <nav class="header-nav">
+        <a class="header-tab active" data-screen="explore">
+          <i class="lucide-compass" style="margin-right: 6px;"></i> Explorar Mapa
+        </a>
+        <a class="header-tab" data-screen="routes">
+          <i class="lucide-git-branch" style="margin-right: 6px;"></i> Indicaciones
+        </a>
+        <a class="header-tab" data-screen="alerts">
+          <i class="lucide-bell" style="margin-right: 6px;"></i> Alertas
+        </a>
+        <a class="header-tab" data-screen="profile">
+          <i class="lucide-user" style="margin-right: 6px;"></i> Mi Perfil
+        </a>
+      </nav>
+
+      <div class="header-right">
+        <button class="btn-incident-alert" id="btnIncidentAlert">
+          <i class="lucide-alert-circle" style="font-size: 13px;"></i> Reportar Alerta
+        </button>
+        <span class="header-icon"><i class="lucide-bell"></i></span>
+        <span class="user-welcome-text">Hola, <strong class="user-name-placeholder">Usuario</strong></span>
+        <div class="header-avatar user-avatar-placeholder">U</div>
+      </div>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <div class="dashboard-body-container">
+
+      <!-- PANTALLA 1: Explorar (Barra lateral + Mapa) -->
+      <main class="tab-content-screen active" id="mainMapScreen">
+        <!-- Barra Lateral Izquierda -->
+        <aside class="dashboard-sidebar">
+          <div class="sidebar-scroll-content">
+
+            <div class="sidebar-section-label">
+              <i class="lucide-search" style="font-size: 14px;"></i> Planifica tu Ruta
+            </div>
+
+            <!-- Búsqueda con Sugerencias -->
+            <div class="nav-search-box">
+              <div class="search-group">
+                <div class="nav-input-field">
+                  <i class="lucide-circle-dot" style="color: var(--primary-cyan);"></i>
+                  <input type="text" id="inputOrigin" placeholder="¿Desde dónde sales?" autocomplete="off">
+                  <button class="btn-select-map" id="btnSelectOriginMap" title="Seleccionar en el mapa">
+                    <i class="lucide-map" style="font-size: 16px;"></i>
+                  </button>
+                </div>
+                <div class="search-results" id="originResults"></div>
+              </div>
+              <div class="search-group">
+                <div class="nav-input-field">
+                  <i class="lucide-map-pin" style="color: var(--danger-red);"></i>
+                  <input type="text" id="inputDestination" placeholder="¿A dónde vas?" autocomplete="off">
+                  <button class="btn-select-map" id="btnSelectDestMap" title="Seleccionar en el mapa">
+                    <i class="lucide-map" style="font-size: 16px;"></i>
+                  </button>
+                </div>
+                <div class="search-results" id="destResults"></div>
+              </div>
+            </div>
+
+            <!-- Botón Buscar Ruta -->
+            <button class="btn btn-primary btn-full" id="btnBuscarRuta">
+              <i class="lucide-navigation" style="font-size: 15px;"></i> Buscar Ruta Segura
+            </button>
+
+            <!-- Indicador de carga -->
+            <div class="route-loader" id="routeLoader" style="display: none;">
+              <div class="loader-spinner"></div>
+              <span>Calculando rutas óptimas...</span>
+            </div>
+
+            <!-- Selector Ruta Segura / Óptima -->
+            <div class="route-toggle" id="routeToggle" style="display: none;">
+              <button class="route-toggle-btn safe active" id="toggleSafe">
+                <div class="toggle-icon"><i class="lucide-shield"></i></div>
+                Ruta Segura <span class="toggle-time">-- min</span>
+              </button>
+              <button class="route-toggle-btn fast" id="toggleFast">
+                <div class="toggle-icon"><i class="lucide-zap"></i></div>
+                Ruta Óptima <span class="toggle-time">-- min</span>
+              </button>
+            </div>
+
+            <!-- Estadísticas de la Ruta -->
+            <div class="route-stats" id="routeStatsPanel" style="display: none;">
+              <div class="stat-card safety-card">
+                <span class="stat-header"><i class="lucide-shield-check"></i> Seguridad</span>
+                <span class="stat-value" id="safetyValue">--%</span>
+              </div>
+              <div class="stat-card eta-card">
+                <span class="stat-header"><i class="lucide-clock"></i> Tiempo</span>
+                <span class="stat-value" id="etaValue">-- min</span>
+              </div>
+              <div class="stat-card distance-card">
+                <span class="stat-header"><i class="lucide-ruler"></i> Distancia</span>
+                <span class="stat-value" id="distanceValue">-- km</span>
+              </div>
+            </div>
+
+            <!-- Reportes de la Comunidad -->
+            <div class="reports-panel">
+              <div class="reports-header">
+                <h3>Reportes Ciudadanos</h3>
+                <a href="#" onclick="document.querySelector('[data-screen=alerts]').click(); return false;">Ver Todos</a>
+              </div>
+              <div class="reports-list" id="reportsList">
+                <!-- Cargado por JS -->
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Mapa Leaflet (derecha) -->
+        <div class="dashboard-map-container">
+          <div id="map"></div>
+
+          <!-- Controles flotantes del mapa -->
+          <div class="map-controls">
+            <div class="map-control-btn zoom-pill">
+              <span class="zoom-btn" id="zoomIn">+</span>
+              <span class="zoom-btn" id="zoomOut">−</span>
+            </div>
+            <div class="map-control-btn" id="centerMap" title="Centrar mapa en Lima">
+              <i class="lucide-locate"></i>
+            </div>
+          </div>
+
+          <!-- BOTÓN SOS flotante abajo a la derecha -->
+          <button class="btn-sos" id="btnSOS" title="Emergencia SOS">
+            <i class="lucide-siren"></i>
+            <span>SOS</span>
+          </button>
+        </div>
+      </main>
+
+      <!-- PANTALLA 2: Indicaciones -->
+      <section class="tab-content-screen" id="routesScreen">
+        <div class="desktop-page-wrapper">
+          <h2 class="screen-title">Indicaciones de Ruta</h2>
+          <p class="screen-subtitle">Guía paso a paso generada en tiempo real con datos de tráfico y seguridad ciudadana.</p>
+
+          <div style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--border-color); padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.02);">
+            <div id="directionsSteps">
+              <!-- Generado por JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3: Alertas Activas -->
+      <section class="tab-content-screen" id="alertsScreen">
+        <div class="desktop-page-wrapper">
+          <h2 class="screen-title">Alertas Activas en Lima</h2>
+          <p class="screen-subtitle">Incidentes críticos de seguridad y tráfico reportados en tiempo real por la comunidad.</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="background: var(--danger-red-bg); padding: 24px; border-radius: var(--radius-lg); border-left: 5px solid var(--danger-red); box-shadow: var(--shadow-sm);">
+              <div style="font-size: 14px; font-weight: 800; color: var(--danger-red); display: flex; align-items: center; gap: 8px;">
+                <i class="lucide-alert-triangle" style="font-size: 16px;"></i> Alto Riesgo de Robos
+              </div>
+              <p style="font-size: 13px; color: var(--text-dark); margin: 10px 0 0 0; line-height: 1.6;">Actividad delictiva alta reportada en la Av. Petit Thouars cuadra 4, Miraflores. Se sugiere desviar el trayecto y priorizar el uso de la Av. Arequipa.</p>
+            </div>
+
+            <div style="background: var(--warning-orange-bg); padding: 24px; border-radius: var(--radius-lg); border-left: 5px solid var(--warning-orange); box-shadow: var(--shadow-sm);">
+              <div style="font-size: 14px; font-weight: 800; color: var(--warning-orange); display: flex; align-items: center; gap: 8px;">
+                <i class="lucide-car" style="font-size: 16px;"></i> Congestión Vehicular Severa
+              </div>
+              <p style="font-size: 13px; color: var(--text-dark); margin: 10px 0 0 0; line-height: 1.6;">Retraso elevado en la Av. Angamos Oeste por desvíos viales activos en la Av. Santa Cruz. Tiempo estimado adicional: +6 minutos.</p>
+            </div>
+
+            <div style="background: var(--info-blue-bg); padding: 24px; border-radius: var(--radius-lg); border-left: 5px solid var(--info-blue); box-shadow: var(--shadow-sm);">
+              <div style="font-size: 14px; font-weight: 800; color: var(--info-blue); display: flex; align-items: center; gap: 8px;">
+                <i class="lucide-shield" style="font-size: 16px;"></i> Operativo de Serenazgo
+              </div>
+              <p style="font-size: 13px; color: var(--text-dark); margin: 10px 0 0 0; line-height: 1.6;">Control de identidad preventivo de la policía y serenazgo de Miraflores en la Calle Shell cuadra 3. Zona resguardada.</p>
+            </div>
+
+            <div style="background: #F1F5F9; padding: 24px; border-radius: var(--radius-lg); border-left: 5px solid var(--text-gray); box-shadow: var(--shadow-sm);">
+              <div style="font-size: 14px; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
+                <i class="lucide-wrench" style="font-size: 16px;"></i> Obras Viales Activas
+              </div>
+              <p style="font-size: 13px; color: var(--text-dark); margin: 10px 0 0 0; line-height: 1.6;">Mantenimiento de pistas en el carril derecho del Óvalo Higuereta. Conducir con precaución y reducir la velocidad.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 4: Mi Perfil -->
+      <section class="tab-content-screen" id="profileScreen">
+        <div class="desktop-page-wrapper">
+          <h2 class="screen-title">Mi Cuenta</h2>
+          <p class="screen-subtitle">Administra tu perfil, contactos de emergencia y preferencias de navegación.</p>
+
+          <div class="profile-grid">
+            <div class="profile-card">
+              <div class="profile-avatar-large user-avatar-placeholder">U</div>
+              <div>
+                <h3 class="profile-name user-name-placeholder">Usuario</h3>
+                <p class="profile-email user-email-placeholder">correo@movefy.com</p>
+              </div>
+              <div class="session-badge"><i class="lucide-check-circle" style="font-size: 13px;"></i> Sesión Activa</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <div style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--border-color); padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.01);">
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--text-dark); margin-top: 0; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                  <i class="lucide-phone-call" style="color: var(--danger-red);"></i> Contactos de Emergencia (SOS)
+                </h3>
+                <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 20px; line-height: 1.5;">Vincula números telefónicos para recibir tu ubicación en tiempo real al activar el botón SOS.</p>
+                <div style="display: flex; gap: 12px;">
+                  <button class="btn btn-secondary" onclick="alert('Funcionalidad de vincular contactos en desarrollo...')" style="padding: 10px 20px; font-size: 12px;">Vincular Contacto</button>
+                  <button class="btn btn-secondary" onclick="alert('Grupo familiar verificado correctamente.')" style="padding: 10px 20px; font-size: 12px;">Verificar Grupo Familiar</button>
+                </div>
+              </div>
+
+              <div style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--border-color); padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.01);">
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--text-dark); margin-top: 0; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                  <i class="lucide-settings" style="color: var(--primary-cyan);"></i> Preferencias de Navegación
+                </h3>
+                <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 20px; line-height: 1.5;">Personaliza cómo Movefy calcula tus rutas en la ciudad.</p>
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dark); margin-bottom: 12px; cursor: pointer;">
+                  <input type="checkbox" checked style="accent-color: var(--primary-cyan);"> Evitar zonas con alta incidencia delictiva (Recomendado)
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dark); cursor: pointer;">
+                  <input type="checkbox" checked style="accent-color: var(--primary-cyan);"> Recibir alertas de desvíos y bloqueos al instante
+                </label>
+              </div>
+
+              <button class="btn btn-dark" onclick="handleDashboardLogout()" style="padding: 14px; font-size: 13px; background: var(--danger-red); border-color: var(--danger-red); width: 220px; font-weight: 700;">
+                <i class="lucide-log-out"></i> Cerrar Sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Modal: Reportar Incidente -->
+  <div class="incident-modal" id="incidentModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="display: flex; align-items: center; gap: 8px;"><i class="lucide-alert-circle" style="color: var(--danger-red);"></i> Reportar Incidente Vial</h3>
+        <button class="btn-close-modal" id="btnCloseModal"><i class="lucide-x"></i></button>
+      </div>
+      <div class="incident-types-grid">
+        <button class="type-select-btn" data-type="suspicious">
+          <i class="lucide-alert-triangle" style="font-size: 24px; color: var(--danger-red);"></i>
+          <span>Actividad Sospechosa</span>
+        </button>
+        <button class="type-select-btn" data-type="police">
+          <i class="lucide-shield" style="font-size: 24px; color: var(--primary-cyan);"></i>
+          <span>Patrullaje Policial</span>
+        </button>
+        <button class="type-select-btn" data-type="blockage">
+          <i class="lucide-wrench" style="font-size: 24px; color: var(--text-gray);"></i>
+          <span>Calle Bloqueada</span>
+        </button>
+        <button class="type-select-btn" data-type="accident">
+          <i class="lucide-car" style="font-size: 24px; color: var(--danger-red);"></i>
+          <span>Choque / Accidente</span>
+        </button>
+      </div>
+      <button class="btn btn-primary btn-submit-incident" id="btnSubmitIncident">
+        Enviar Reporte
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal: SOS Emergencia -->
+  <div class="incident-modal" id="sosModal">
+    <div class="modal-content sos-modal-content">
+      <div style="text-align: center;">
+        <div class="sos-pulse-ring">
+          <div class="sos-countdown" id="sosCountdown">5</div>
+        </div>
+        <h3 style="font-size: 20px; font-weight: 800; color: var(--danger-red); margin: 24px 0 8px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <i class="lucide-siren"></i> ENVIANDO ALERTA SOS
+        </h3>
+        <p style="font-size: 13px; color: var(--text-gray); margin: 0 0 24px;">Tu ubicación será compartida con tus contactos de emergencia y las autoridades cercanas.</p>
+        <button class="btn btn-secondary" id="btnCancelSOS" style="padding: 12px 32px; font-size: 13px; font-weight: 700;">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Dashboard JS -->
+  <script src="PUBLIC/assets/scripts/dashboard.js?v=2"></script>
+
+</body>
+</html>
