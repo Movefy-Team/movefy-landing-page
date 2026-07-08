@@ -26,7 +26,7 @@ let routeDataCache = { safe: null, fast: null };
 let selectingPoint = null; 
 
 const LIMA_CENTER = [-12.0464, -77.0428];
-const LIMA_VIEWBOX = '-77.20,-11.90,-76.80,-12.25';
+const LIMA_VIEWBOX = '-77.25,-11.75,-76.65,-12.35';
 
 const communityIncidents = [
   { id: 1, type: 'suspicious', title: 'Actividad Sospechosa', desc: 'Av. Larco, Miraflores • hace 2 min', coords: [-12.1250, -77.0312], color: 'red', icon: 'lucide-alert-triangle' },
@@ -66,8 +66,9 @@ function initMap() {
     attributionControl: false
   }).setView(LIMA_CENTER, 13);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    subdomains: 'abcd'
   }).addTo(map);
 
   L.control.attribution({ position: 'bottomleft', prefix: false })
@@ -106,12 +107,12 @@ async function handleMapClick(e) {
     document.getElementById('inputOrigin').value = placeName;
     startCoords = [lat, lng];
     setMarker('start', startCoords, placeName);
-    showMapToast('📍 Origen seleccionado en el mapa');
+    showMapToast('Origen seleccionado en el mapa');
   } else {
     document.getElementById('inputDestination').value = placeName;
     endCoords = [lat, lng];
     setMarker('end', endCoords, placeName);
-    showMapToast('📍 Destino seleccionado en el mapa');
+    showMapToast('Destino seleccionado en el mapa');
   }
 
   selectingPoint = null;
@@ -192,13 +193,13 @@ async function geocodeSearch(query, resultsContainer, type) {
 
   try {
     const queryWithCity = query.toLowerCase().includes('lima') ? query : query + ', Lima, Perú';
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(queryWithCity)}&countrycodes=pe&limit=6&accept-language=es&viewbox=${LIMA_VIEWBOX}&bounded=0`;
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(queryWithCity)}&countrycodes=pe&limit=8&accept-language=es&viewbox=${LIMA_VIEWBOX}&bounded=1&addressdetails=1`;
     const res = await fetch(url);
     const data = await res.json();
 
     resultsContainer.innerHTML = '';
     if (data.length === 0) {
-      resultsContainer.innerHTML = '<div class="search-result-item no-result"><i class="lucide-search-x"></i> Sin resultados. Intenta con otra dirección.</div>';
+      resultsContainer.innerHTML = '<div class="search-result-item no-result"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> Sin resultados. Intenta con otra dirección.</div>';
       resultsContainer.classList.add('visible');
       return;
     }
@@ -206,8 +207,8 @@ async function geocodeSearch(query, resultsContainer, type) {
     data.forEach(place => {
       const item = document.createElement('div');
       item.className = 'search-result-item';
-      const icon = getPlaceIcon(place.type, place.class);
-      item.innerHTML = `<i class="${icon} result-icon"></i><span>${place.display_name}</span>`;
+      const iconSvg = getPlaceSvgIcon(place.type, place.class);
+      item.innerHTML = `<span class="result-icon" style="flex-shrink:0;display:flex;">${iconSvg}</span><span>${place.display_name}</span>`;
       item.addEventListener('click', () => {
         const lat = parseFloat(place.lat);
         const lon = parseFloat(place.lon);
@@ -239,26 +240,45 @@ async function geocodeSearch(query, resultsContainer, type) {
   }
 }
 
-function getPlaceIcon(type, cls) {
-  if (cls === 'building' || type === 'house' || type === 'residential') return 'lucide-home';
-  if (cls === 'highway' || type === 'motorway') return 'lucide-map';
-  if (type === 'suburb' || type === 'neighbourhood') return 'lucide-map-pin';
-  if (type === 'city' || type === 'town') return 'lucide-building-2';
-  if (cls === 'shop') return 'lucide-shopping-cart';
-  if (type === 'school' || type === 'university') return 'lucide-graduation-cap';
-  return 'lucide-map-pin';
+function getPlaceSvgIcon(type, cls) {
+  const s = 'width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+  if (cls === 'building' || type === 'house' || type === 'residential')
+    return `<svg ${s}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+  if (cls === 'highway' || type === 'motorway')
+    return `<svg ${s}><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg>`;
+  if (type === 'suburb' || type === 'neighbourhood')
+    return `<svg ${s}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+  if (type === 'city' || type === 'town')
+    return `<svg ${s}><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22V12h6v10"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/></svg>`;
+  if (cls === 'shop')
+    return `<svg ${s}><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`;
+  if (type === 'school' || type === 'university')
+    return `<svg ${s}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 4 3 6 3s6-2 6-3v-5"/></svg>`;
+  return `<svg ${s}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
 }
 
 function setMarker(type, coords, label) {
   if (type === 'start') {
     if (startMarker) map.removeLayer(startMarker);
-    const iconHtml = `<div class="custom-marker origin-marker"><span>A</span></div>`;
-    const icon = L.divIcon({ html: iconHtml, className: 'custom-marker-wrapper', iconSize: [32, 32], iconAnchor: [16, 32] });
+    const iconHtml = `<div style="position:relative;width:36px;height:44px;">
+      <svg width="36" height="44" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 0C8.06 0 0 8.06 0 18c0 13.5 18 26 18 26s18-12.5 18-26C36 8.06 27.94 0 18 0z" fill="#00D4AA"/>
+        <circle cx="18" cy="16" r="11" fill="white" fill-opacity="0.25"/>
+        <text x="18" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="Inter,sans-serif">A</text>
+      </svg>
+    </div>`;
+    const icon = L.divIcon({ html: iconHtml, className: '', iconSize: [36, 44], iconAnchor: [18, 44] });
     startMarker = L.marker(coords, { icon }).addTo(map).bindPopup(`<b>Origen:</b> ${label}`);
   } else {
     if (endMarker) map.removeLayer(endMarker);
-    const iconHtml = `<div class="custom-marker dest-marker"><span>B</span></div>`;
-    const icon = L.divIcon({ html: iconHtml, className: 'custom-marker-wrapper', iconSize: [32, 32], iconAnchor: [16, 32] });
+    const iconHtml = `<div style="position:relative;width:36px;height:44px;">
+      <svg width="36" height="44" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 0C8.06 0 0 8.06 0 18c0 13.5 18 26 18 26s18-12.5 18-26C36 8.06 27.94 0 18 0z" fill="#EF4444"/>
+        <circle cx="18" cy="16" r="11" fill="white" fill-opacity="0.25"/>
+        <text x="18" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="Inter,sans-serif">B</text>
+      </svg>
+    </div>`;
+    const icon = L.divIcon({ html: iconHtml, className: '', iconSize: [36, 44], iconAnchor: [18, 44] });
     endMarker = L.marker(coords, { icon }).addTo(map).bindPopup(`<b>Destino:</b> ${label}`);
   }
 
@@ -266,8 +286,63 @@ function setMarker(type, coords, label) {
 }
 
 // ==========================================
-//  CÁLCULO DE RUTAS (OSRM)
+//  CÁLCULO DE RUTAS Y TRÁFICO (OSRM + SIMULACIÓN LIMA)
 // ==========================================
+
+function calculateRealLimaTraffic(route, isSafeRoute) {
+  let baseDurationSecs = route.duration;
+  let distanceMeters = route.distance;
+  
+  // 1. OBTENER HORA ACTUAL EN LIMA
+  const now = new Date();
+  const options = { timeZone: 'America/Lima', hour: 'numeric', minute: 'numeric', hour12: false };
+  const limaTimeStr = now.toLocaleString('en-US', options);
+  const [hour, minute] = limaTimeStr.split(':').map(Number);
+  const currentHourFloat = hour + (minute / 60);
+
+  // 2. MULTIPLICADORES POR HORA PICO (Ajustados para ser más realistas)
+  let trafficMultiplier = 1.1; // Tráfico base normal
+  
+  // Hora pico mañana (7:00 AM - 9:30 AM)
+  if (currentHourFloat >= 7.0 && currentHourFloat <= 9.5) {
+    trafficMultiplier = 1.5; 
+  } 
+  // Hora pico noche (5:30 PM - 8:30 PM)
+  else if (currentHourFloat >= 17.5 && currentHourFloat <= 20.5) {
+    trafficMultiplier = 1.8; 
+  }
+  // Hora almuerzo (1:00 PM - 2:30 PM)
+  else if (currentHourFloat >= 13.0 && currentHourFloat <= 14.5) {
+    trafficMultiplier = 1.3;
+  }
+  // Madrugada
+  else if (currentHourFloat >= 0.0 && currentHourFloat <= 5.0) {
+    trafficMultiplier = 0.9; 
+  }
+
+  // 3. SEMÁFOROS Y CRUCES
+  // 1 semáforo cada 600 metros en promedio
+  const estimatedTrafficLights = Math.floor(distanceMeters / 600);
+  
+  const numberOfSteps = route.legs && route.legs[0] && route.legs[0].steps ? route.legs[0].steps.length : 0;
+  
+  // Promedio estadístico: no siempre te toca rojo. Añadimos 15s por semáforo estimado.
+  // Añadimos 5s por cada instrucción de giro/maniobra.
+  let intersectionsPenaltySecs = (estimatedTrafficLights * 15) + (numberOfSteps * 5);
+
+  // 4. PENALIZACIONES POR TIPO DE RUTA
+  if (isSafeRoute) {
+    // La ruta segura va por avenidas con un poco más de carga vehicular
+    trafficMultiplier += 0.1;
+    intersectionsPenaltySecs += (estimatedTrafficLights * 5); 
+  }
+
+  // 5. CÁLCULO FINAL
+  const finalDurationSecs = (baseDurationSecs * trafficMultiplier) + intersectionsPenaltySecs;
+  
+  return finalDurationSecs;
+}
+
 async function fetchRoutes(from, to) {
   showRouteLoading(true);
   document.getElementById('routeToggle').style.display = 'none';
@@ -290,6 +365,10 @@ async function fetchRoutes(from, to) {
     const routeFast = data.routes[0];
     const routeSafe = data.routes.length > 1 ? data.routes[1] : data.routes[0];
 
+    // --- APLICAR MODELO DE TRÁFICO REAL DE LIMA ---
+    routeFast.duration = calculateRealLimaTraffic(routeFast, false);
+    routeSafe.duration = calculateRealLimaTraffic(routeSafe, true);
+    
     routeDataCache.fast = routeFast;
     routeDataCache.safe = routeSafe;
 
@@ -411,15 +490,16 @@ function translateModifier(mod) {
 }
 
 function getManeuverIcon(type, modifier) {
-  if (type === 'depart') return 'lucide-compass';
-  if (type === 'arrive') return 'lucide-flag';
-  if (type === 'turn' && modifier && modifier.includes('left')) return 'lucide-corner-up-left';
-  if (type === 'turn' && modifier && modifier.includes('right')) return 'lucide-corner-up-right';
-  if (type === 'roundabout') return 'lucide-rotate-ccw';
-  if (type === 'merge') return 'lucide-git-merge';
-  if (type === 'fork') return 'lucide-git-branch';
-  if (type === 'end of road') return 'lucide-corner-up-right';
-  return 'lucide-arrow-up';
+  const s = 'width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+  if (type === 'depart') return `<svg ${s}><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`;
+  if (type === 'arrive') return `<svg ${s}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`;
+  if (type === 'turn' && modifier && modifier.includes('left')) return `<svg ${s}><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>`;
+  if (type === 'turn' && modifier && modifier.includes('right')) return `<svg ${s}><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>`;
+  if (type === 'roundabout') return `<svg ${s}><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>`;
+  if (type === 'merge') return `<svg ${s}><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg>`;
+  if (type === 'fork') return `<svg ${s}><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>`;
+  if (type === 'end of road') return `<svg ${s}><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>`;
+  return `<svg ${s}><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>`;
 }
 
 function showRouteLoading(show) {
@@ -466,7 +546,7 @@ function renderDirections(steps, distKm, durationMin) {
       <div class="directions-summary-right">
         <div style="font-size: 20px; font-weight: 800; color: ${routeColor};">${durationMin} min</div>
         <div style="font-size: 11px; color: var(--text-light); display: flex; align-items: center; justify-content: flex-end; gap: 4px;">
-          ${distKm} km · <i class="${routeIcon}" style="font-size: 12px;"></i> ${routeLabel}
+          ${distKm} km · ${routeLabel}
         </div>
       </div>
     </div>
@@ -478,7 +558,7 @@ function renderDirections(steps, distKm, durationMin) {
     html += `
       <div class="directions-step">
         <div class="step-number" style="background: ${bgColor}; color: ${iconColor};">
-          <i class="${step.icon}" style="font-size: 16px;"></i>
+          ${step.icon}
         </div>
         <div class="step-text">${step.instruction}</div>
         <div class="step-dist">${step.distance}</div>
@@ -492,6 +572,13 @@ function renderDirections(steps, distKm, durationMin) {
 // ==========================================
 //  INCIDENTES COMUNITARIOS
 // ==========================================
+const reportSvgIcons = {
+  'lucide-alert-triangle': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  'lucide-shield': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  'lucide-wrench': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+  'lucide-car': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C1.4 11.3 1 12.1 1 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>'
+};
+
 function renderIncidentsList() {
   const container = document.getElementById('reportsList');
   if (!container) return;
@@ -505,8 +592,9 @@ function renderIncidentsList() {
       const idx = incidentsList.indexOf(inc);
       if (incidentMarkers[idx]) incidentMarkers[idx].openPopup();
     };
+    const svgIcon = reportSvgIcons[inc.icon] || reportSvgIcons['lucide-alert-triangle'];
     card.innerHTML = `
-      <div class="report-icon-wrapper ${inc.color}"><i class="${inc.icon}"></i></div>
+      <div class="report-icon-wrapper ${inc.color}">${svgIcon}</div>
       <div class="report-info">
         <div class="report-title">${inc.title}</div>
         <div class="report-desc">${inc.desc}</div>
@@ -520,19 +608,27 @@ function renderIncidentMarkers() {
   incidentMarkers.forEach(m => map.removeLayer(m));
   incidentMarkers = [];
 
+  const svgIcons = {
+    'lucide-alert-triangle': '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" fill="none" stroke="white" stroke-width="2"/><line x1="12" y1="9" x2="12" y2="13" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="0.5" fill="white" stroke="white" stroke-width="1"/>',
+    'lucide-shield': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    'lucide-wrench': '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    'lucide-car': '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C1.4 11.3 1 12.1 1 13v3c0 .6.4 1 1 1h2" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="none" stroke="white" stroke-width="2"/><circle cx="17" cy="17" r="2" fill="none" stroke="white" stroke-width="2"/>'
+  };
+
   incidentsList.forEach(inc => {
     const markerColor = inc.color === 'red' ? '#EF4444' :
                         inc.color === 'cyan' ? '#00D4AA' :
                         inc.color === 'orange' ? '#F97316' : '#94A3B8';
 
+    const svgPath = svgIcons[inc.icon] || svgIcons['lucide-alert-triangle'];
     const html = `<div style="
-      background: ${markerColor}; width: 28px; height: 28px; border-radius: 50%;
-      border: 2.5px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-      display: flex; align-items: center; justify-content: center; color: white;
-    "><i class="${inc.icon}" style="font-size: 14px;"></i></div>`;
+      background: ${markerColor}; width: 30px; height: 30px; border-radius: 50%;
+      border: 2.5px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex; align-items: center; justify-content: center;
+    "><svg width="16" height="16" viewBox="0 0 24 24" fill="none">${svgPath}</svg></div>`;
     
-    const icon = L.divIcon({ html, className: 'inc-marker', iconSize: [28, 28], iconAnchor: [14, 14] });
-    const marker = L.marker(inc.coords, { icon }).addTo(map).bindPopup(`<b><i class="${inc.icon}" style="font-size: 12px;"></i> ${inc.title}</b><br>${inc.desc}`);
+    const icon = L.divIcon({ html, className: '', iconSize: [30, 30], iconAnchor: [15, 15] });
+    const marker = L.marker(inc.coords, { icon }).addTo(map).bindPopup(`<b>${inc.title}</b><br>${inc.desc}`);
     incidentMarkers.push(marker);
   });
 }
@@ -545,7 +641,7 @@ function setupEventListeners() {
   document.getElementById('zoomOut').onclick = () => map.zoomOut();
   document.getElementById('centerMap').onclick = () => {
     map.setView(LIMA_CENTER, 13);
-    showMapToast('📍 Mapa centrado en Lima');
+    showMapToast('Mapa centrado en Lima');
   };
 
   document.getElementById('btnBuscarRuta').addEventListener('click', () => {

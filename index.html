@@ -129,19 +129,19 @@
 
     <div class="navbar-actions">
       <div class="lang-selector" id="langSelector">
-        <button class="lang-toggle" id="langToggle" aria-label="Seleccionar idioma" aria-expanded="false">
-          <span class="lang-flag" id="currentLangFlag">🇪🇸</span>
+        <button class="lang-toggle" id="langToggle" aria-label="Seleccionar idioma" aria-expanded="false" style="padding: 6px 12px; border-radius: 20px; gap: 8px;">
+          <svg class="lang-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
           <span id="currentLangLabel">ES</span>
           <svg class="lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>
         <div class="lang-dropdown" id="langDropdown" role="listbox">
           <button class="lang-option active" data-lang="es" role="option" aria-selected="true">
-            <span class="lang-flag">🇪🇸</span>
+            <span style="font-weight: 600; font-size: 0.8rem; opacity: 0.7;">ES</span>
             <span>Español</span>
             <svg class="lang-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           </button>
           <button class="lang-option" data-lang="en" role="option" aria-selected="false">
-            <span class="lang-flag">🇺🇸</span>
+            <span style="font-weight: 600; font-size: 0.8rem; opacity: 0.7;">EN</span>
             <span>English</span>
             <svg class="lang-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           </button>
@@ -432,7 +432,6 @@
       }
     };
 
-    const flagMap = { es: '🇪🇸', en: '🇺🇸' };
     const labelMap = { es: 'ES', en: 'EN' };
 
     function setLanguage(lang) {
@@ -457,7 +456,6 @@
       }
 
       // Update toggle button
-      document.getElementById('currentLangFlag').textContent = flagMap[lang];
       document.getElementById('currentLangLabel').textContent = labelMap[lang];
 
       // Update active state in dropdown

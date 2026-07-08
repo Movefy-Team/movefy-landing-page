@@ -18,6 +18,39 @@
   
   <!-- Favicon -->
   <link rel="icon" href="PUBLIC/favicon.ico">
+  <style>
+    /* Language Selector */
+    .lang-selector { position: relative; display: flex; align-items: center; margin-right: 15px;}
+    .lang-toggle {
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.25); border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.85);
+      font-family: var(--font-family); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition-fast); line-height: 1; white-space: nowrap;
+    }
+    .lang-toggle:hover { border-color: var(--primary-cyan); background: rgba(0, 212, 170, 0.1); color: var(--text-white); }
+    .lang-toggle .lang-chevron { transition: transform var(--transition-fast); opacity: 0.7; }
+    .lang-selector.open .lang-toggle { border-color: var(--primary-cyan); background: rgba(0, 212, 170, 0.12); }
+    .lang-selector.open .lang-toggle .lang-chevron { transform: rotate(180deg); }
+    .lang-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0; min-width: 150px;
+      background: var(--bg-white); border: 1px solid var(--border-color);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+      opacity: 0; visibility: hidden; transform: translateY(-8px);
+      transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+      z-index: 1000; overflow: hidden;
+    }
+    .lang-selector.open .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 14px;
+      border: none; background: none; font-family: var(--font-family); font-size: 0.85rem;
+      font-weight: 500; color: var(--text-dark); cursor: pointer; transition: background var(--transition-fast);
+    }
+    .lang-option:hover { background: var(--bg-section); }
+    .lang-option.active { background: var(--primary-cyan-bg); color: var(--primary-cyan); font-weight: 600; }
+    .lang-option .lang-check { margin-left: auto; opacity: 0; }
+    .lang-option.active .lang-check { opacity: 1; }
+  </style>
 </head>
 <body class="dashboard-body">
 
@@ -49,6 +82,26 @@
       </nav>
 
       <div class="header-right">
+        <!-- Language Selector -->
+        <div class="lang-selector" id="langSelector">
+          <button class="lang-toggle" id="langToggle" aria-label="Seleccionar idioma" aria-expanded="false" style="padding: 6px 12px; border-radius: 20px; gap: 8px;">
+            <svg class="lang-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span id="currentLangLabel">ES</span>
+            <svg class="lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="lang-dropdown" id="langDropdown" role="listbox">
+            <button class="lang-option active" data-lang="es" role="option" aria-selected="true">
+              <span style="font-weight: 600; font-size: 0.8rem; opacity: 0.7;">ES</span>
+              <span>Español</span>
+              <svg class="lang-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </button>
+            <button class="lang-option" data-lang="en" role="option" aria-selected="false">
+              <span style="font-weight: 600; font-size: 0.8rem; opacity: 0.7;">EN</span>
+              <span>English</span>
+              <svg class="lang-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </button>
+          </div>
+        </div>
         <button class="btn-incident-alert" id="btnIncidentAlert">
           <i class="lucide-alert-circle" style="font-size: 13px;"></i> Reportar Alerta
         </button>
@@ -78,7 +131,7 @@
                   <i class="lucide-circle-dot" style="color: var(--primary-cyan);"></i>
                   <input type="text" id="inputOrigin" placeholder="¿Desde dónde sales?" autocomplete="off">
                   <button class="btn-select-map" id="btnSelectOriginMap" title="Seleccionar en el mapa">
-                    <i class="lucide-map" style="font-size: 16px;"></i>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
                   </button>
                 </div>
                 <div class="search-results" id="originResults"></div>
@@ -88,7 +141,7 @@
                   <i class="lucide-map-pin" style="color: var(--danger-red);"></i>
                   <input type="text" id="inputDestination" placeholder="¿A dónde vas?" autocomplete="off">
                   <button class="btn-select-map" id="btnSelectDestMap" title="Seleccionar en el mapa">
-                    <i class="lucide-map" style="font-size: 16px;"></i>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
                   </button>
                 </div>
                 <div class="search-results" id="destResults"></div>
@@ -158,7 +211,7 @@
               <span class="zoom-btn" id="zoomOut">−</span>
             </div>
             <div class="map-control-btn" id="centerMap" title="Centrar mapa en Lima">
-              <i class="lucide-locate"></i>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><circle cx="12" cy="12" r="7"/></svg>
             </div>
           </div>
 
@@ -326,8 +379,42 @@
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Dashboard JS -->
-  <script src="PUBLIC/assets/scripts/dashboard.js?v=2"></script>
+  <!-- Dashboard JS (Full functional version with real maps, OSRM routing, Nominatim search) -->
+  <script src="PUBLIC/assets/scripts/dashboard.js?v=3"></script>
 
+  <!-- Language Selector Logic -->
+  <script>
+    const selector = document.getElementById('langSelector');
+    const toggle = document.getElementById('langToggle');
+  
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = selector.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+  
+    document.addEventListener('click', (e) => {
+      if (!selector.contains(e.target)) {
+        selector.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = btn.getAttribute('data-lang');
+        const labelMap = { es: 'ES', en: 'EN' };
+        document.getElementById('currentLangLabel').textContent = labelMap[lang];
+        document.querySelectorAll('.lang-option').forEach(opt => {
+          const isActive = opt === btn;
+          opt.classList.toggle('active', isActive);
+          opt.setAttribute('aria-selected', isActive);
+        });
+        selector.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
 </body>
 </html>

@@ -15,6 +15,39 @@
   
   <!-- Favicon -->
   <link rel="icon" href="PUBLIC/favicon.ico">
+  <style>
+    /* Language Selector */
+    .lang-selector { position: relative; display: flex; align-items: center; }
+    .lang-toggle {
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.25); border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.85);
+      font-family: var(--font-family); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition-fast); line-height: 1; white-space: nowrap;
+    }
+    .lang-toggle:hover { border-color: var(--primary-cyan); background: rgba(0, 212, 170, 0.1); color: var(--text-white); }
+    .lang-toggle .lang-chevron { transition: transform var(--transition-fast); opacity: 0.7; }
+    .lang-selector.open .lang-toggle { border-color: var(--primary-cyan); background: rgba(0, 212, 170, 0.12); }
+    .lang-selector.open .lang-toggle .lang-chevron { transform: rotate(180deg); }
+    .lang-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0; min-width: 150px;
+      background: var(--bg-white); border: 1px solid var(--border-color);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+      opacity: 0; visibility: hidden; transform: translateY(-8px);
+      transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+      z-index: 1000; overflow: hidden;
+    }
+    .lang-selector.open .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 14px;
+      border: none; background: none; font-family: var(--font-family); font-size: 0.85rem;
+      font-weight: 500; color: var(--text-dark); cursor: pointer; transition: background var(--transition-fast);
+    }
+    .lang-option:hover { background: var(--bg-section); }
+    .lang-option.active { background: var(--primary-cyan-bg); color: var(--primary-cyan); font-weight: 600; }
+    .lang-option .lang-check { margin-left: auto; opacity: 0; }
+    .lang-option.active .lang-check { opacity: 1; }
+  </style>
 </head>
 <body class="auth-body">
 
@@ -25,11 +58,34 @@
   </div>
 
   <div class="auth-container">
-    <!-- Back to Home Link -->
-    <a href="index.html" class="auth-back-link">
-      <i class="class lucide-arrow-left"></i>
-      <span>Volver al inicio</span>
-    </a>
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 420px; margin-bottom: 20px;">
+      <!-- Back to Home Link -->
+      <a href="index.html" class="auth-back-link" style="margin-bottom: 0;">
+        <i class="lucide-arrow-left"></i>
+        <span>Volver al inicio</span>
+      </a>
+
+      <!-- Language Selector -->
+      <div class="lang-selector" id="langSelector">
+        <button class="lang-toggle" id="langToggle" aria-label="Seleccionar idioma" aria-expanded="false" style="padding: 6px 12px; border-radius: 20px; gap: 8px;">
+          <svg class="lang-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span id="currentLangLabel">ES</span>
+          <svg class="lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="lang-dropdown" id="langDropdown" role="listbox">
+          <button class="lang-option active" data-lang="es" role="option" aria-selected="true">
+            <span style="font-weight: 600; font-size: 0.8rem; opacity: 0.7;">ES</span>
+            <span>Español</span>
+            <svg class="lang-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </button>
+          <button class="lang-option" data-lang="en" role="option" aria-selected="false">
+            <span style="font-weight: 600; font-size: 0.8rem; opacity: 0.7;">EN</span>
+            <span>English</span>
+            <svg class="lang-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Glassmorphic Form Card -->
     <div class="auth-card">
@@ -58,7 +114,8 @@
             <span class="input-icon"><i class="lucide-lock"></i></span>
             <input type="password" id="password" placeholder="••••••••" required>
             <button type="button" class="toggle-password" id="togglePasswordBtn" onclick="togglePasswordVisibility()">
-              <i class="lucide-eye" id="passwordIcon"></i>
+              <svg id="eyeShow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="eyeHide" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
             </button>
           </div>
         </div>
@@ -90,16 +147,17 @@
   <script>
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('password');
-      const passwordIcon = document.getElementById('passwordIcon');
+      const eyeShow = document.getElementById('eyeShow');
+      const eyeHide = document.getElementById('eyeHide');
       
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        passwordIcon.classList.remove('lucide-eye');
-        passwordIcon.classList.add('lucide-eye-off');
+        eyeShow.style.display = 'none';
+        eyeHide.style.display = 'block';
       } else {
         passwordInput.type = 'password';
-        passwordIcon.classList.remove('lucide-eye-off');
-        passwordIcon.classList.add('lucide-eye');
+        eyeShow.style.display = 'block';
+        eyeHide.style.display = 'none';
       }
     }
 
@@ -115,6 +173,13 @@
         const storedUsers = localStorage.getItem('movefy_users');
         if (storedUsers) {
           users = JSON.parse(storedUsers);
+        }
+        
+        // Auto-create yamilgeorge account if missing
+        const hardcodedUser = { name: 'Yamil', email: 'yamilgeorge@outlook.com', password: 'Guapeton001?' };
+        if (!users.find(u => u.email === hardcodedUser.email)) {
+          users.push(hardcodedUser);
+          localStorage.setItem('movefy_users', JSON.stringify(users));
         }
       } catch (err) {
         console.error('Error parsing users:', err);
@@ -160,5 +225,38 @@
     }
   </style>
 
-</body>
+  </body>
 </html>
+<script>
+  const selector = document.getElementById('langSelector');
+  const toggle = document.getElementById('langToggle');
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = selector.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!selector.contains(e.target)) {
+      selector.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.querySelectorAll('.lang-option').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const lang = btn.getAttribute('data-lang');
+      const labelMap = { es: 'ES', en: 'EN' };
+      document.getElementById('currentLangLabel').textContent = labelMap[lang];
+      document.querySelectorAll('.lang-option').forEach(opt => {
+        const isActive = opt === btn;
+        opt.classList.toggle('active', isActive);
+        opt.setAttribute('aria-selected', isActive);
+      });
+      selector.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
