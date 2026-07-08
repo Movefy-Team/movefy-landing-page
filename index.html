@@ -231,66 +231,61 @@
     </div>
   </section>
 
-  <section class="fleet-section section" id="fleet">
+  <section class="pricing-section section" id="fleet">
     <div class="container">
-      <div class="fleet-grid">
-        <div class="fleet-image-wrapper animate-on-scroll">
-          <img src="PUBLIC/assets/images/fleet-dashboard.png" alt="Movefy Fleet Dashboard - Visualización holística">
-          <div class="fleet-overlay-badges">
-            <div class="fleet-badge">
-              <span class="dot green"></span>
-              <span data-i18n="fleet_badge_1">142 Unidades Activas</span>
-            </div>
-            <div class="fleet-badge">
-              <span class="dot orange"></span>
-              <span data-i18n="fleet_badge_2">3 Desvíos Detectados</span>
-            </div>
+      <div class="section-header animate-on-scroll">
+        <h2 data-i18n="pricing_title">Planes diseñados para ti</h2>
+        <p data-i18n="pricing_subtitle">Elige el nivel de protección e inteligencia que necesitas en tu ruta.</p>
+      </div>
+      
+      <div class="pricing-grid">
+        <!-- Básico -->
+        <div class="pricing-card animate-on-scroll animate-delay-1">
+          <div class="pricing-header">
+            <h3 data-i18n="price_basic_title">Básico</h3>
+            <div class="price">Gratis</div>
+            <p data-i18n="price_basic_desc">Para moverte ocasionalmente por la ciudad.</p>
           </div>
-          <div class="fleet-label">
-            <span data-i18n="fleet_label_sub">Control Total</span>
-            <h3 data-i18n="fleet_label_title">Visualización Holística de Flotas</h3>
-          </div>
+          <ul class="pricing-features">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Rutas estándar</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alertas comunitarias</li>
+            <li class="disabled"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a0a0a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Sin rutas seguras IA</li>
+            <li class="disabled"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a0a0a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Sin métricas de huella</li>
+          </ul>
+          <a href="registro.html" class="btn btn-outline btn-full" data-i18n="price_basic_btn">Comenzar Gratis</a>
         </div>
 
-        <div class="fleet-info animate-on-scroll animate-delay-2">
-          <a href="analitica.html" class="fleet-info-card">
-            <div class="fleet-info-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg>
-            </div>
-            <div>
-              <h4 data-i18n="fleet_card1_title">Huella de Carbono</h4>
-              <p data-i18n="fleet_card1_desc">Reducción garantizada de emisiones por optimización de rutas.</p>
-            </div>
-            <div class="card-arrow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-          </a>
+        <!-- Pro -->
+        <div class="pricing-card popular animate-on-scroll animate-delay-2">
+          <div class="popular-badge" data-i18n="price_popular">Más Elegido</div>
+          <div class="pricing-header">
+            <h3 data-i18n="price_pro_title">Movefy Pro</h3>
+            <div class="price">S/ 14.90<span>/mes</span></div>
+            <p data-i18n="price_pro_desc">Seguridad total en tu día a día.</p>
+          </div>
+          <ul class="pricing-features">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Rutas seguras por IA</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reportes en tiempo real</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Botón SOS prioritario</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sin anuncios publicitarios</li>
+          </ul>
+          <a href="registro.html" class="btn btn-primary btn-full" data-i18n="price_pro_btn">Probar Pro 7 días</a>
+        </div>
 
-          <a href="seguridad.html" class="fleet-info-card stat-highlight">
-            <div class="fleet-info-icon highlight">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-            </div>
-            <div>
-              <div class="stat-value">99.9%</div>
-              <div class="stat-label" data-i18n="fleet_card2_label">Fiabilidad en rutas sugeridas</div>
-            </div>
-            <div class="card-arrow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-          </a>
-
-          <a href="rutas.html" class="fleet-info-card">
-            <div class="fleet-info-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-            <div>
-              <h4 data-i18n="fleet_card3_title">Infraestructura Cloud</h4>
-              <p data-i18n="fleet_card3_desc">Garantizamos operatividad ininterrumpida las 24 horas.</p>
-            </div>
-            <div class="card-arrow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-          </a>
+        <!-- Flotas -->
+        <div class="pricing-card animate-on-scroll animate-delay-3">
+          <div class="pricing-header">
+            <h3 data-i18n="price_fleet_title">Flotas & Empresas</h3>
+            <div class="price">S/ 49.00<span>/vehículo</span></div>
+            <p data-i18n="price_fleet_desc">Control absoluto para tu negocio.</p>
+          </div>
+          <ul class="pricing-features">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Dashboard analítico y GPS</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Tracking de huella de carbono</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alertas de desvíos en vivo</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Soporte técnico 24/7</li>
+          </ul>
+          <a href="#cta" class="btn btn-outline btn-full" data-i18n="price_fleet_btn">Contactar Ventas</a>
         </div>
       </div>
     </div>
@@ -371,15 +366,18 @@
         feature3_title: 'Analítica Predictiva',
         feature3_desc: 'Visualización de datos avanzada para reducir el consumo de combustible hasta en un 25%.',
         feature3_link: 'Ver informes',
-        fleet_badge_1: '142 Unidades Activas',
-        fleet_badge_2: '3 Desvíos Detectados',
-        fleet_label_sub: 'Control Total',
-        fleet_label_title: 'Visualización Holística de Flotas',
-        fleet_card1_title: 'Huella de Carbono',
-        fleet_card1_desc: 'Reducción garantizada de emisiones por optimización de rutas.',
-        fleet_card2_label: 'Fiabilidad en rutas sugeridas',
-        fleet_card3_title: 'Infraestructura Cloud',
-        fleet_card3_desc: 'Garantizamos operatividad ininterrumpida las 24 horas.',
+        pricing_title: 'Planes diseñados para ti',
+        pricing_subtitle: 'Elige el nivel de protección e inteligencia que necesitas en tu ruta.',
+        price_basic_title: 'Básico',
+        price_basic_desc: 'Para moverte ocasionalmente por la ciudad.',
+        price_basic_btn: 'Comenzar Gratis',
+        price_popular: 'Más Elegido',
+        price_pro_title: 'Movefy Pro',
+        price_pro_desc: 'Seguridad total en tu día a día.',
+        price_pro_btn: 'Probar Pro 7 días',
+        price_fleet_title: 'Flotas & Empresas',
+        price_fleet_desc: 'Control absoluto para tu negocio.',
+        price_fleet_btn: 'Contactar Ventas',
         cta_title: '¿Listo para transformar su logística urbana?',
         cta_subtitle: 'Únase a las más de 500 empresas que ya están ahorrando tiempo y mejorando la seguridad de sus empleados con SafeRoute.',
         cta_btn_start: 'Empezar ahora gratis',
@@ -413,15 +411,18 @@
         feature3_title: 'Predictive Analytics',
         feature3_desc: 'Advanced data visualization to reduce fuel consumption by up to 25%.',
         feature3_link: 'View reports',
-        fleet_badge_1: '142 Active Units',
-        fleet_badge_2: '3 Deviations Detected',
-        fleet_label_sub: 'Total Control',
-        fleet_label_title: 'Holistic Fleet Visualization',
-        fleet_card1_title: 'Carbon Footprint',
-        fleet_card1_desc: 'Guaranteed emission reduction through route optimization.',
-        fleet_card2_label: 'Reliability in suggested routes',
-        fleet_card3_title: 'Cloud Infrastructure',
-        fleet_card3_desc: 'We guarantee uninterrupted operability 24 hours a day.',
+        pricing_title: 'Plans designed for you',
+        pricing_subtitle: 'Choose the level of protection and intelligence you need on your route.',
+        price_basic_title: 'Basic',
+        price_basic_desc: 'For moving occasionally around the city.',
+        price_basic_btn: 'Start for Free',
+        price_popular: 'Most Popular',
+        price_pro_title: 'Movefy Pro',
+        price_pro_desc: 'Total safety in your daily life.',
+        price_pro_btn: 'Try Pro 7 days',
+        price_fleet_title: 'Fleets & Enterprises',
+        price_fleet_desc: 'Absolute control for your business.',
+        price_fleet_btn: 'Contact Sales',
         cta_title: 'Ready to transform your urban logistics?',
         cta_subtitle: 'Join the 500+ companies already saving time and improving employee safety with SafeRoute.',
         cta_btn_start: 'Get started for free',
