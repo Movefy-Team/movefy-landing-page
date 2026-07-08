@@ -300,41 +300,31 @@ function calculateRealLimaTraffic(route, isSafeRoute) {
   const [hour, minute] = limaTimeStr.split(':').map(Number);
   const currentHourFloat = hour + (minute / 60);
 
-  // 2. MULTIPLICADORES POR HORA PICO (Ajustados para ser más realistas)
-  let trafficMultiplier = 1.1; // Tráfico base normal
+  // 2. MULTIPLICADORES POR HORA PICO (Ajustados para compensar OSRM y ser más ágiles)
+  let trafficMultiplier = 0.95; // Tráfico base (ligeramente más rápido que el default)
   
-  // Hora pico mañana (7:00 AM - 9:30 AM)
   if (currentHourFloat >= 7.0 && currentHourFloat <= 9.5) {
-    trafficMultiplier = 1.5; 
-  } 
-  // Hora pico noche (5:30 PM - 8:30 PM)
-  else if (currentHourFloat >= 17.5 && currentHourFloat <= 20.5) {
-    trafficMultiplier = 1.8; 
-  }
-  // Hora almuerzo (1:00 PM - 2:30 PM)
-  else if (currentHourFloat >= 13.0 && currentHourFloat <= 14.5) {
-    trafficMultiplier = 1.3;
-  }
-  // Madrugada
-  else if (currentHourFloat >= 0.0 && currentHourFloat <= 5.0) {
-    trafficMultiplier = 0.9; 
+    trafficMultiplier = 1.25; 
+  } else if (currentHourFloat >= 17.5 && currentHourFloat <= 20.5) {
+    trafficMultiplier = 1.45; 
+  } else if (currentHourFloat >= 13.0 && currentHourFloat <= 14.5) {
+    trafficMultiplier = 1.1;
+  } else if (currentHourFloat >= 0.0 && currentHourFloat <= 5.0) {
+    trafficMultiplier = 0.75; 
   }
 
   // 3. SEMÁFOROS Y CRUCES
-  // 1 semáforo cada 600 metros en promedio
-  const estimatedTrafficLights = Math.floor(distanceMeters / 600);
-  
+  // 1 semáforo cada 800 metros en promedio
+  const estimatedTrafficLights = Math.floor(distanceMeters / 800);
   const numberOfSteps = route.legs && route.legs[0] && route.legs[0].steps ? route.legs[0].steps.length : 0;
   
-  // Promedio estadístico: no siempre te toca rojo. Añadimos 15s por semáforo estimado.
-  // Añadimos 5s por cada instrucción de giro/maniobra.
-  let intersectionsPenaltySecs = (estimatedTrafficLights * 15) + (numberOfSteps * 5);
+  // Añadimos 8s por semáforo estimado y solo 2s por instrucción de giro
+  let intersectionsPenaltySecs = (estimatedTrafficLights * 8) + (numberOfSteps * 2);
 
   // 4. PENALIZACIONES POR TIPO DE RUTA
   if (isSafeRoute) {
-    // La ruta segura va por avenidas con un poco más de carga vehicular
-    trafficMultiplier += 0.1;
-    intersectionsPenaltySecs += (estimatedTrafficLights * 5); 
+    trafficMultiplier += 0.05;
+    intersectionsPenaltySecs += (estimatedTrafficLights * 4); 
   }
 
   // 5. CÁLCULO FINAL
