@@ -5,26 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movefy - Analítica Predictiva</title>
   <meta name="description" content="Visualización de datos avanzada para reducir el consumo de combustible hasta en un 25% con Movefy.">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/landing.css">
-  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="stylesheet" href="PUBLIC/assets/styles/styles.css">
+  <link rel="stylesheet" href="PUBLIC/assets/styles/landing.css">
+  <link rel="icon" href="PUBLIC/favicon.ico">
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="index.html" class="navbar-logo">
-      <img src="img/logo-movefy.png" alt="Movefy Logo" class="logo-img">
+      <img src="PUBLIC/assets/images/logo-movefy.png" alt="Movefy Logo" class="logo-img">
     </a>
     <div class="navbar-nav">
-      <a href="index.html">Inicio</a>
       <a href="rutas.html">Rutas</a>
       <a href="seguridad.html">Seguridad</a>
-      <a href="analitica.html" class="active">Analítica</a>
+      <a href="index.html#fleet">Flota</a>
+      <a href="index.html#cta">Contacto</a>
+    </div>
+    <div class="navbar-actions">
+      <a href="login.html" class="btn-login">Iniciar Sesión</a>
+      <a href="registro.html" class="btn btn-sm btn-primary">Registrarte</a>
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero" id="top" style="padding-bottom: 32px;">
     <div class="container">
       <div class="hero-content animate-on-scroll" style="max-width: 100%; text-align: center; margin: 0 auto;">
@@ -34,7 +36,6 @@
     </div>
   </section>
 
-  <!-- CONTENT -->
   <section class="features-section" style="padding: 48px 0 64px;">
     <div class="container">
       <div class="features-grid" style="grid-template-columns: 1fr 1fr; max-width: 900px; margin: 0 auto; gap: 32px;">
@@ -79,7 +80,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom" style="border-top: none; padding-top: 0;">
@@ -92,6 +92,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="PUBLIC/assets/scripts/main.js"></script>
 </body>
 </html>

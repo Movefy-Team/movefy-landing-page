@@ -3,92 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movefy - Iniciar Sesión</title>
-  <meta name="description" content="Accede a tu panel de navegación segura con Movefy. Rutas inteligentes en tiempo real.">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/login.css">
-  <link rel="icon" type="image/png" href="img/favicon.png">
+  <title>Iniciar Sesión - Movefy</title>
+  <meta name="description" content="Inicia sesión en tu cuenta de Movefy y accede a tus rutas seguras, analíticas y reportes en tiempo real.">
+  
+  <!-- Lucide Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="PUBLIC/assets/styles/styles.css">
+  <link rel="stylesheet" href="PUBLIC/assets/styles/auth.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="PUBLIC/favicon.ico">
 </head>
-<body class="login-page">
+<body class="auth-body">
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar" id="navbar">
-    <a href="index.html" class="navbar-logo">
-      <img src="img/logo-movefy.png" alt="Movefy Logo" class="logo-img">
-    </a>
-    <div class="navbar-actions">
-      <!-- Icons removed as requested -->
-    </div>
-  </nav>
-
-  <!-- ===== MAP BACKGROUND ===== -->
-  <div class="login-background">
-    <img src="img/map-bg-tech.png" alt="Mapa de Lima Tecnológico" loading="eager">
+  <!-- Animated Glowing Background Blobs -->
+  <div class="auth-bg-blobs">
+    <div class="auth-blob auth-blob-1"></div>
+    <div class="auth-blob auth-blob-2"></div>
   </div>
 
-  <!-- ===== LOGIN CONTENT ===== -->
-  <main class="login-content">
-    <div class="login-card">
-      <!-- Shield Icon -->
-      <div class="login-shield">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
+  <div class="auth-container">
+    <!-- Back to Home Link -->
+    <a href="index.html" class="auth-back-link">
+      <i class="class lucide-arrow-left"></i>
+      <span>Volver al inicio</span>
+    </a>
+
+    <!-- Glassmorphic Form Card -->
+    <div class="auth-card">
+      <div class="auth-header">
+        <a href="index.html" class="auth-logo">
+          <img src="PUBLIC/assets/images/logo-movefy.png" alt="Movefy Logo">
+        </a>
+        <h2>Bienvenido de nuevo</h2>
+        <p>Ingresa tus credenciales para acceder a Movefy</p>
       </div>
 
-      <h1>Bienvenido</h1>
-      <p class="login-subtitle">Accede a tu panel de navegación segura</p>
-
-      <!-- Login Form -->
-      <form class="login-form" id="loginForm">
-        <div class="input-group">
-          <label for="username">Usuario</label>
-          <div class="input-wrapper">
-            <span class="input-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </span>
-            <input type="text" id="username" name="username" placeholder="Nombre de usuario" autocomplete="username" required>
+      <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+        <!-- Email Input -->
+        <div class="auth-input-group">
+          <label for="email">Correo Electrónico</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon"><i class="lucide-mail"></i></span>
+            <input type="email" id="email" placeholder="nombre@correo.com" required>
           </div>
         </div>
 
-        <div class="input-group">
-          <label for="password">
-            Contraseña
-            <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
-          </label>
-          <div class="input-wrapper">
-            <span class="input-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </span>
-            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
-            <button type="button" class="input-action" id="togglePassword" aria-label="Mostrar contraseña">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <!-- Password Input -->
+        <div class="auth-input-group">
+          <label for="password">Contraseña</label>
+          <div class="auth-input-wrapper">
+            <span class="input-icon"><i class="lucide-lock"></i></span>
+            <input type="password" id="password" placeholder="••••••••" required>
+            <button type="button" class="toggle-password" id="togglePasswordBtn" onclick="togglePasswordVisibility()">
+              <i class="lucide-eye" id="passwordIcon"></i>
             </button>
           </div>
         </div>
 
-        <button type="submit" class="login-submit" id="submitBtn">
-          Ingresar
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <!-- Remember Me & Forgot Password -->
+        <div class="auth-extras">
+          <label class="auth-remember">
+            <input type="checkbox" id="rememberMe">
+            <span>Recordarme</span>
+          </label>
+          <a href="#" class="auth-forgot" onclick="alert('Se ha enviado un enlace de recuperación a tu correo.')">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary btn-auth-submit">
+          <span>Iniciar Sesión</span>
         </button>
       </form>
 
-      <div class="login-register">
-        ¿No tienes cuenta? <a href="registro.html">Regístrate</a>
+
+      <!-- Footer text -->
+      <div class="auth-footer-text">
+        ¿No tienes una cuenta? <a href="registro.html">Regístrate aquí</a>
       </div>
     </div>
-  </main>
-
-  <!-- Bottom Badges Removed -->
-
-  <!-- Status Pill -->
-  <div class="status-pill">
-    <span class="status-dot"></span>
-    Sistemas Operativos
   </div>
 
-  <script src="js/main.js"></script>
-  <script src="js/login.js"></script>
+  <!-- Password visibility and Mock Auth Logic script -->
+  <script>
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const passwordIcon = document.getElementById('passwordIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordIcon.classList.remove('lucide-eye');
+        passwordIcon.classList.add('lucide-eye-off');
+      } else {
+        passwordInput.type = 'password';
+        passwordIcon.classList.remove('lucide-eye-off');
+        passwordIcon.classList.add('lucide-eye');
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+
+      // Check localStorage for users
+      let users = [];
+      try {
+        const storedUsers = localStorage.getItem('movefy_users');
+        if (storedUsers) {
+          users = JSON.parse(storedUsers);
+        }
+      } catch (err) {
+        console.error('Error parsing users:', err);
+      }
+
+      // Find user
+      const user = users.find(u => u.email === email && u.password === password);
+      if (!user) {
+        alert('Correo electrónico o contraseña incorrectos. Por favor, inténtalo de nuevo.');
+        return;
+      }
+
+      // Select submit button
+      const btn = document.querySelector('.btn-auth-submit');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span style="display: flex; align-items: center; gap: var(--spacing-sm);"><i class="lucide-loader animate-spin" style="animation: spin 1s linear infinite;"></i> Cargando...</span>';
+      btn.disabled = true;
+
+      // Save session info
+      try {
+        localStorage.setItem('movefy_session', JSON.stringify({ name: user.name, email: user.email }));
+      } catch (err) {
+        console.error('Error saving session:', err);
+      }
+
+      // Mock delay
+      setTimeout(() => {
+        alert('¡Inicio de sesión exitoso! Bienvenido, ' + user.name + '. Redirigiendo...');
+        window.location.href = 'dashboard.html';
+      }, 1500);
+    }
+
+    function handleSocialLogin(provider) {
+      alert('Conectando con ' + provider + '...');
+    }
+  </script>
+
+  <!-- Add CSS keyframes for rotation -->
+  <style>
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
 </body>
 </html>
