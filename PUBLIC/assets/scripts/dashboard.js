@@ -299,52 +299,49 @@ function calculateRealLimaTraffic(route, isSafeRoute) {
   const [hour, minute] = limaTimeStr.split(':').map(Number);
   const currentHourFloat = hour + (minute / 60);
 
-  // 2. DETERMINAR VELOCIDAD PROMEDIO BASE SEGÚN LA DISTANCIA (Realidad Limeña)
-  // OSRM asume que si tomas la Panamericana irás a 80km/h libres. En Lima eso es falso.
-  // A mayor distancia cruzando la ciudad, el promedio de velocidad CAE por los embotellamientos masivos.
-  let baseSpeedKmh = 20; 
+  // 2. DETERMINAR VELOCIDAD PROMEDIO BASE SEGÚN LA DISTANCIA
+  let baseSpeedKmh = 25; 
   
   if (distanceKm <= 4) {
-    baseSpeedKmh = 24; // Rutas cortas intra-distrito (más ágiles por calles locales)
+    baseSpeedKmh = 30; // Rutas cortas sin mucho tráfico
   } else if (distanceKm <= 10) {
-    baseSpeedKmh = 18; // Rutas medias (toman avenidas, agarran algo de tráfico pesado)
+    baseSpeedKmh = 25; // Rutas medias
   } else {
-    baseSpeedKmh = 14; // Rutas largas cross-city (ej. SMP a Miraflores). Se asume embotellamiento duro.
+    baseSpeedKmh = 22; // Rutas largas cross-city (ej. Mega Plaza a Miraflores)
   }
 
   // 3. FACTOR DE TRÁFICO POR HORA PICO (Modifica la velocidad)
-  let speedMultiplier = 0.85; // Tráfico regular (día normal)
+  let speedMultiplier = 1.0; // Tráfico regular (fluido normal)
   
   if (currentHourFloat >= 7.0 && currentHourFloat <= 9.5) {
-    speedMultiplier = 0.55; // Hora pico mañana (muy lento)
+    speedMultiplier = 0.65; // Hora pico mañana
   } else if (currentHourFloat >= 17.5 && currentHourFloat <= 20.5) {
-    speedMultiplier = 0.45; // Hora pico noche (prácticamente paralizado)
+    speedMultiplier = 0.55; // Hora pico noche (peor congestión)
   } else if (currentHourFloat >= 13.0 && currentHourFloat <= 14.5) {
-    speedMultiplier = 0.70; // Hora de almuerzo
+    speedMultiplier = 0.80; // Hora de almuerzo
   } else if (currentHourFloat >= 0.0 && currentHourFloat <= 5.0) {
-    speedMultiplier = 1.6; // Madrugada (vía libre, puedes ir al límite de velocidad)
+    speedMultiplier = 1.5; // Madrugada (vía libre)
   }
 
   // 4. AJUSTE POR TIPO DE RUTA
   if (isSafeRoute) {
-    // Rutas seguras priorizan avenidas principales iluminadas (Javier Prado, Arequipa)
-    // que estadísticamente son las más congestionadas.
-    speedMultiplier *= 0.90; 
+    // La ruta segura penaliza ligerísimamente por preferir grandes avenidas
+    speedMultiplier *= 0.95; 
   }
 
   // 5. CÁLCULO DE TIEMPO FINAL
   let realSpeedKmh = baseSpeedKmh * speedMultiplier;
   
-  // Límite mínimo: Nunca permitir que la velocidad promedio baje de 6 km/h (velocidad de caminata rápida)
-  if (realSpeedKmh < 6) realSpeedKmh = 6;
+  // Límite mínimo absoluto de velocidad
+  if (realSpeedKmh < 8) realSpeedKmh = 8;
 
   // Calculamos el tiempo en horas y lo pasamos a segundos
   const timeHours = distanceKm / realSpeedKmh;
   let finalDurationSecs = timeHours * 3600;
   
-  // Añadimos penalidad microscópica por cantidad de giros (cruces/semáforos)
+  // Añadimos penalidad microscópica por cantidad de giros
   const numberOfSteps = route.legs && route.legs[0] && route.legs[0].steps ? route.legs[0].steps.length : 0;
-  finalDurationSecs += (numberOfSteps * 3);
+  finalDurationSecs += (numberOfSteps * 2);
 
   return finalDurationSecs;
 }
