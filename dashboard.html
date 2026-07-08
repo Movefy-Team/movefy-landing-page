@@ -103,7 +103,7 @@
           </div>
         </div>
         <button class="btn-incident-alert" id="btnIncidentAlert">
-          <i class="lucide-alert-circle" style="font-size: 13px;"></i> Reportar Alerta
+          <i class="lucide-alert-circle" style="font-size: 13px;"></i> <span data-i18n="dash_alert_btn">Reportar Alerta</span>
         </button>
         <span class="header-icon"><i class="lucide-bell"></i></span>
         <span class="user-welcome-text">Hola, <strong class="user-name-placeholder">Usuario</strong></span>
@@ -132,7 +132,7 @@
               <div class="search-group">
                 <div class="nav-input-field">
                   <i class="lucide-circle-dot" style="color: var(--primary-cyan);"></i>
-                  <input type="text" id="inputOrigin" placeholder="¿Desde dónde sales?" autocomplete="off">
+                  <input type="text" id="inputOrigin" data-i18n="dash_search_1" placeholder="¿Desde dónde sales?" autocomplete="off">
                   <button class="btn-select-map" id="btnSelectOriginMap" title="Seleccionar en el mapa">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
                   </button>
@@ -142,7 +142,7 @@
               <div class="search-group">
                 <div class="nav-input-field">
                   <i class="lucide-map-pin" style="color: var(--danger-red);"></i>
-                  <input type="text" id="inputDestination" placeholder="¿A dónde vas?" autocomplete="off">
+                  <input type="text" id="inputDestination" data-i18n="dash_search_2" placeholder="¿A dónde vas?" autocomplete="off">
                   <button class="btn-select-map" id="btnSelectDestMap" title="Seleccionar en el mapa">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
                   </button>
@@ -153,7 +153,7 @@
 
             <!-- Botón Buscar Ruta -->
             <button class="btn btn-primary btn-full" id="btnBuscarRuta">
-              <i class="lucide-navigation" style="font-size: 15px;"></i> Buscar Ruta Segura
+              <i class="lucide-navigation" style="font-size: 15px;"></i> <span data-i18n="dash_search_btn">Buscar Ruta</span>
             </button>
 
             <!-- Indicador de carga -->
@@ -166,11 +166,11 @@
             <div class="route-toggle" id="routeToggle" style="display: none;">
               <button class="route-toggle-btn safe active" id="toggleSafe">
                 <div class="toggle-icon"><i class="lucide-shield"></i></div>
-                Ruta Segura <span class="toggle-time">-- min</span>
+                <span data-i18n="dash_type_safe">Ruta Segura</span> <span class="toggle-time">-- min</span>
               </button>
               <button class="route-toggle-btn fast" id="toggleFast">
                 <div class="toggle-icon"><i class="lucide-zap"></i></div>
-                Ruta Óptima <span class="toggle-time">-- min</span>
+                <span data-i18n="dash_type_fast">Ruta Óptima</span> <span class="toggle-time">-- min</span>
               </button>
             </div>
 
@@ -385,39 +385,6 @@
   <!-- Dashboard JS (Full functional version with real maps, OSRM routing, Nominatim search) -->
   <script src="PUBLIC/assets/scripts/dashboard.js?v=3"></script>
 
-  <!-- Language Selector Logic -->
-  <script>
-    const selector = document.getElementById('langSelector');
-    const toggle = document.getElementById('langToggle');
-  
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = selector.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen);
-    });
-  
-    document.addEventListener('click', (e) => {
-      if (!selector.contains(e.target)) {
-        selector.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  
-    document.querySelectorAll('.lang-option').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lang = btn.getAttribute('data-lang');
-        const labelMap = { es: 'ES', en: 'EN' };
-        document.getElementById('currentLangLabel').textContent = labelMap[lang];
-        document.querySelectorAll('.lang-option').forEach(opt => {
-          const isActive = opt === btn;
-          opt.classList.toggle('active', isActive);
-          opt.setAttribute('aria-selected', isActive);
-        });
-        selector.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  </script>
+  <script src="PUBLIC/assets/scripts/i18n.js"></script>
 </body>
 </html>
