@@ -300,25 +300,23 @@ function calculateRealLimaTraffic(route, isSafeRoute) {
   const currentHourFloat = hour + (minute / 60);
 
   // 2. DETERMINAR VELOCIDAD PROMEDIO BASE SEGÚN LA DISTANCIA
-  let baseSpeedKmh = 25; 
+  let baseSpeedKmh = 24; // Rutas medias (Flujo por avenidas grandes)
   
   if (distanceKm <= 4) {
-    baseSpeedKmh = 30; // Rutas cortas sin mucho tráfico
-  } else if (distanceKm <= 10) {
-    baseSpeedKmh = 25; // Rutas medias
-  } else {
-    baseSpeedKmh = 22; // Rutas largas cross-city (ej. Mega Plaza a Miraflores)
+    baseSpeedKmh = 22; // Rutas cortas (Más semáforos, tráfico local de distrito)
+  } else if (distanceKm > 10) {
+    baseSpeedKmh = 22; // Rutas largas cross-city (Vías rápidas pero con cuellos de botella)
   }
 
   // 3. FACTOR DE TRÁFICO POR HORA PICO (Modifica la velocidad)
-  let speedMultiplier = 1.0; // Tráfico regular (fluido normal)
+  let speedMultiplier = 0.85; // Tráfico regular de día (Lima nunca va al 100% de la velocidad base)
   
   if (currentHourFloat >= 7.0 && currentHourFloat <= 9.5) {
     speedMultiplier = 0.65; // Hora pico mañana
   } else if (currentHourFloat >= 17.5 && currentHourFloat <= 20.5) {
     speedMultiplier = 0.55; // Hora pico noche (peor congestión)
-  } else if (currentHourFloat >= 13.0 && currentHourFloat <= 14.5) {
-    speedMultiplier = 0.80; // Hora de almuerzo
+  } else if (currentHourFloat >= 12.5 && currentHourFloat <= 14.5) {
+    speedMultiplier = 0.80; // Hora de almuerzo (colegios/oficinas)
   } else if (currentHourFloat >= 0.0 && currentHourFloat <= 5.0) {
     speedMultiplier = 1.5; // Madrugada (vía libre)
   }
