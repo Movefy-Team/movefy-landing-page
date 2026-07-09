@@ -34,6 +34,8 @@ const translations = {
     // About the Product
     about_title: 'Sobre el Producto',
     about_subtitle: 'Mira Movefy en acción y descubre cómo revolucionamos la seguridad y navegación urbana.',
+    about_team_title: 'Sobre el Equipo',
+    about_team_subtitle: 'Conoce más acerca de nosotros y nuestra visión para un futuro más seguro.',
 
     // About Us
     team_nav: 'Nosotros',
@@ -142,7 +144,9 @@ const translations = {
     feature3_link: 'View reports',
     // About the Product
     about_title: 'About the Product',
-    about_subtitle: 'Watch Movefy in action and discover how we revolutionize urban safety and navigation.',
+    about_subtitle: 'See Movefy in action and discover how we revolutionize urban safety and navigation.',
+    about_team_title: 'About the Team',
+    about_team_subtitle: 'Learn more about us and our vision for a safer future.',
 
     // About Us
     team_nav: 'About Us',
