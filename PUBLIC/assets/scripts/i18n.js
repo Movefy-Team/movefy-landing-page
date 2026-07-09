@@ -35,6 +35,11 @@ const translations = {
     about_title: 'Sobre el Producto',
     about_subtitle: 'Mira Movefy en acción y descubre cómo revolucionamos la seguridad y navegación urbana.',
 
+    // About Us
+    team_nav: 'Nosotros',
+    team_title: 'Nuestro Equipo',
+    team_subtitle: 'Conoce a las mentes detrás de Movefy, dedicadas a construir la navegación urbana del futuro.',
+
     // Pricing
     pricing_title: 'Planes diseñados para ti',
     pricing_subtitle: 'Elige el nivel de protección e inteligencia que necesitas en tu ruta.',
@@ -138,6 +143,11 @@ const translations = {
     // About the Product
     about_title: 'About the Product',
     about_subtitle: 'Watch Movefy in action and discover how we revolutionize urban safety and navigation.',
+
+    // About Us
+    team_nav: 'About Us',
+    team_title: 'Our Team',
+    team_subtitle: 'Meet the minds behind Movefy, dedicated to building the urban navigation of the future.',
 
     // Pricing
     pricing_title: 'Plans designed for you',
