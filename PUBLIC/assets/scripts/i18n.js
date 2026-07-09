@@ -31,7 +31,10 @@ const translations = {
     feature3_title: 'Analítica Predictiva',
     feature3_desc: 'Visualización de datos avanzada para reducir el consumo de combustible hasta en un 25%.',
     feature3_link: 'Ver informes',
-    
+    // About the Product
+    about_title: 'Sobre el Producto',
+    about_subtitle: 'Mira Movefy en acción y descubre cómo revolucionamos la seguridad y navegación urbana.',
+
     // Pricing
     pricing_title: 'Planes diseñados para ti',
     pricing_subtitle: 'Elige el nivel de protección e inteligencia que necesitas en tu ruta.',
@@ -132,7 +135,10 @@ const translations = {
     feature3_title: 'Predictive Analytics',
     feature3_desc: 'Advanced data visualization to reduce fuel consumption by up to 25%.',
     feature3_link: 'View reports',
-    
+    // About the Product
+    about_title: 'About the Product',
+    about_subtitle: 'Watch Movefy in action and discover how we revolutionize urban safety and navigation.',
+
     // Pricing
     pricing_title: 'Plans designed for you',
     pricing_subtitle: 'Choose the level of protection and intelligence you need on your route.',
