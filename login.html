@@ -144,6 +144,36 @@
   </div>
 
   <!-- Password visibility and Mock Auth Logic script -->
+  <script>
+    // Parse URL parameters for registered user info
+    let urlRegisteredUser = null;
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const regName = urlParams.get('reg_name');
+        const regEmail = urlParams.get('reg_email');
+        const regPassword = urlParams.get('reg_password');
+
+        if (regEmail) {
+          document.getElementById('email').value = regEmail;
+          if (regPassword) {
+            document.getElementById('password').value = regPassword;
+          }
+          if (regName) {
+            urlRegisteredUser = { name: regName, email: regEmail.toLowerCase().trim(), password: regPassword };
+          }
+        }
+      } catch (err) {
+        console.error('Error reading URL parameters:', err);
+      }
+    });
+
+    const defaultUsers = [
+      { name: 'Usuario Demo', email: 'demo@movefy.com', password: 'password123' },
+      { name: 'Juan Pérez', email: 'juan@movefy.com', password: 'password123' },
+      { name: 'Yamil', email: 'yamilgeorge@outlook.com', password: 'Guapeton001?' }
+    ];
+
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('password');
       const eyeShow = document.getElementById('eyeShow');
@@ -173,19 +203,20 @@
         if (storedUsers) {
           users = JSON.parse(storedUsers);
         }
-        
-        // Auto-create yamilgeorge account if missing
-        const hardcodedUser = { name: 'Yamil', email: 'yamilgeorge@outlook.com', password: 'Guapeton001?' };
-        if (!users.find(u => u.email === hardcodedUser.email)) {
-          users.push(hardcodedUser);
-          localStorage.setItem('movefy_users', JSON.stringify(users));
-        }
       } catch (err) {
         console.error('Error parsing users:', err);
       }
 
+      // Combine default users, URL registered user, and localStorage users
+      const allUsers = [...defaultUsers, ...users];
+      if (urlRegisteredUser) {
+        if (!allUsers.some(u => u.email === urlRegisteredUser.email)) {
+          allUsers.push(urlRegisteredUser);
+        }
+      }
+
       // Find user
-      const user = users.find(u => u.email === email && u.password === password);
+      const user = allUsers.find(u => u.email === email && u.password === password);
       if (!user) {
         alert('Correo electrónico o contraseña incorrectos. Por favor, inténtalo de nuevo.');
         return;
@@ -207,7 +238,8 @@
       // Mock delay
       setTimeout(() => {
         alert('¡Inicio de sesión exitoso! Bienvenido, ' + user.name + '. Redirigiendo...');
-        window.location.href = 'dashboard.html';
+        // Pass session info in the query parameters as fallback
+        window.location.href = `dashboard.html?name=${encodeURIComponent(user.name)}&email=${encodeURIComponent(user.email)}`;
       }, 1500);
     }
 

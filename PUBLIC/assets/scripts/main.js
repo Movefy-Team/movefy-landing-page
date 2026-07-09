@@ -133,7 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Auth Navbar State ---
-  const sessionData = localStorage.getItem('movefy_session');
+  let sessionData = null;
+  try {
+    sessionData = localStorage.getItem('movefy_session');
+  } catch (err) {
+    console.warn('localStorage is blocked or unavailable:', err);
+  }
   if (sessionData) {
     try {
       const session = JSON.parse(sessionData);

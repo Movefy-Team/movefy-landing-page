@@ -3,7 +3,31 @@
    ======================================== */
 
 // --- Protección de Autenticación ---
-const sessionData = localStorage.getItem('movefy_session');
+let sessionData = null;
+try {
+  sessionData = localStorage.getItem('movefy_session');
+} catch (e) {
+  console.warn('localStorage is blocked or unavailable:', e);
+}
+
+// Fallback: Read session data from URL parameters if localStorage is empty/blocked
+if (!sessionData) {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramName = urlParams.get('name');
+    const paramEmail = urlParams.get('email');
+    if (paramName && paramEmail) {
+      sessionData = JSON.stringify({ name: paramName, email: paramEmail });
+      // Try to save to localStorage as a cache for page reloads
+      try {
+        localStorage.setItem('movefy_session', sessionData);
+      } catch (err) {}
+    }
+  } catch (urlErr) {
+    console.error('Error parsing URL parameters:', urlErr);
+  }
+}
+
 if (!sessionData) {
   alert('Acceso denegado. Por favor, inicia sesión.');
   window.location.href = 'login.html';

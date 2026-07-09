@@ -169,7 +169,7 @@
       // Mock delay
       setTimeout(() => {
         alert('¡Registro exitoso! Tu cuenta ha sido creada. Redirigiendo al inicio de sesión...');
-        window.location.href = 'login.html';
+        window.location.href = `login.html?reg_name=${encodeURIComponent(name)}&reg_email=${encodeURIComponent(email)}&reg_password=${encodeURIComponent(password)}`;
       }, 1500);
     }
 
