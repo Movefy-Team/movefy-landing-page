@@ -39,6 +39,11 @@ const translations = {
     team_nav: 'Nosotros',
     team_title: 'Nuestro Equipo',
     team_subtitle: 'Conoce a las mentes detrás de Movefy, dedicadas a construir la navegación urbana del futuro.',
+    role_breithner: 'Co-fundador & CEO',
+    role_gabriel: 'Desarrollador Principal',
+    role_eduardo: 'Diseñador UI/UX',
+    role_yamil: 'Gerente de Producto',
+    role_fernando: 'Analista de Seguridad',
 
     // Pricing
     pricing_title: 'Planes diseñados para ti',
@@ -148,6 +153,11 @@ const translations = {
     team_nav: 'About Us',
     team_title: 'Our Team',
     team_subtitle: 'Meet the minds behind Movefy, dedicated to building the urban navigation of the future.',
+    role_breithner: 'Co-founder & CEO',
+    role_gabriel: 'Lead Developer',
+    role_eduardo: 'UI/UX Designer',
+    role_yamil: 'Product Manager',
+    role_fernando: 'Security Analyst',
 
     // Pricing
     pricing_title: 'Plans designed for you',
