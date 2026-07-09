@@ -795,8 +795,8 @@
 }
 
 .team-avatar-wrapper {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: var(--radius-full);
   overflow: hidden;
   margin-bottom: var(--spacing-lg);
@@ -858,8 +858,8 @@
 
 @media (max-width: 1200px) {
   .team-avatar-wrapper {
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
   }
 }
 
